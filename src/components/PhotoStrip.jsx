@@ -19,23 +19,21 @@ const PhotoStrip = forwardRef(function PhotoStrip(
   const currentFrame = FRAME_COLORS.find((f) => f.id === frameId) || FRAME_COLORS[0];
   const isDarkFrame = frameId === 'black' || frameId === 'film-black';
 
+  const hasEars = currentFrame.hasCatEars || templateId === 'cat';
+
   return (
     <div
       ref={ref}
       id="export-photo-strip"
-      style={{
-        backgroundColor: currentFrame.hex,
-        color: currentFrame.textHex,
-      }}
-      className={`photo-strip-container w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px] mx-auto p-3.5 sm:p-5 rounded-3xl border-3 border-black shadow-neo-xl transition-all duration-300 relative select-none ${
-        templateId === 'retro' ? 'font-mono' : ''
+      className={`photo-strip-container w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px] mx-auto relative select-none ${
+        hasEars ? 'pt-5 sm:pt-6' : ''
       }`}
     >
-      {/* 0. CAT EARS ORNAMENT (When cat template or cat frame is selected) */}
-      {(currentFrame.hasCatEars || templateId === 'cat') && (
-        <>
+      {/* 0. CAT EARS ORNAMENT (Positioned at top of export container, fully inside bounding box) */}
+      {hasEars && (
+        <div className="w-full relative pointer-events-none">
           {/* Left Cat Ear */}
-          <div className="absolute -top-5 sm:-top-6 left-6 sm:left-8 w-8 h-8 sm:w-10 sm:h-10 z-20 pointer-events-none">
+          <div className="absolute top-0 left-6 sm:left-8 w-8 h-8 sm:w-10 sm:h-10 z-20">
             <div
               style={{
                 backgroundColor: currentFrame.earColor || currentFrame.hex,
@@ -51,7 +49,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
           </div>
 
           {/* Right Cat Ear */}
-          <div className="absolute -top-5 sm:-top-6 right-6 sm:right-8 w-8 h-8 sm:w-10 sm:h-10 z-20 pointer-events-none">
+          <div className="absolute top-0 right-6 sm:right-8 w-8 h-8 sm:w-10 sm:h-10 z-20">
             <div
               style={{
                 backgroundColor: currentFrame.earColor || currentFrame.hex,
@@ -65,8 +63,21 @@ const PhotoStrip = forwardRef(function PhotoStrip(
               />
             </div>
           </div>
-        </>
+        </div>
       )}
+
+      {/* Main Card Body */}
+      <div
+        style={{
+          backgroundColor: currentFrame.hex,
+          color: currentFrame.textHex,
+        }}
+        className={`w-full p-3.5 sm:p-5 rounded-3xl border-3 border-black shadow-neo-xl transition-all duration-300 relative ${
+          hasEars ? '-mt-2.5 sm:-mt-3' : ''
+        } ${
+          templateId === 'retro' ? 'font-mono' : ''
+        }`}
+      >
 
       {/* 1. RETRO FILM SPROCKETS (Only for retro template) */}
       {templateId === 'retro' && (
@@ -285,7 +296,8 @@ const PhotoStrip = forwardRef(function PhotoStrip(
       </div>
 
     </div>
-  );
+  </div>
+);
 });
 
 export default PhotoStrip;
