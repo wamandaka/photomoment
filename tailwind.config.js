@@ -136,6 +136,8 @@ export default {
       "valentine",
       "synthwave",
       "pastel",
+      "garden",
+      "autumn",
       "nord",
       "dim"
     ],

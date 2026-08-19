@@ -1,10 +1,13 @@
-import React, { useRef, useEffect } from 'react';
-import { Sparkles, ArrowLeft, RotateCcw, Heart, Share2, Download, Camera } from 'lucide-react';
+import React, { useRef, useEffect, useState } from 'react';
+import { Sparkles, ArrowLeft, RotateCcw, Heart, Dices, Download, Shuffle, Trash2 } from 'lucide-react';
 import PhotoStrip from '../components/PhotoStrip';
 import PhotoEditor from '../components/PhotoEditor';
 import DownloadButton from '../components/DownloadButton';
+import PersonalityCard from '../components/PersonalityCard';
+import MysteryModal from '../components/MysteryModal';
 import { FILTERS } from '../data/filters';
 import { fireConfetti } from '../utils/downloadImage';
+import { useDraggableDecorations } from '../hooks/useDraggableDecorations';
 
 export default function Result({
   capturedPhotos,
@@ -20,12 +23,30 @@ export default function Result({
   onDateTextChange,
   showDate,
   onToggleDate,
-  activeStickers,
-  onToggleSticker,
+  personality,
+  onRerollPersonality,
+  onApplyMystery,
   onTakeAnother,
   onBackToStudio,
 }) {
   const photoStripRef = useRef(null);
+  const [isMysteryOpen, setIsMysteryOpen] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [showPersonalityBadge, setShowPersonalityBadge] = useState(true);
+
+  // Hook for interactive drag & drop custom decorations
+  const {
+    decorations: customDecorations,
+    selectedId: selectedDecorationId,
+    setSelectedId: setSelectedDecorationId,
+    addSticker,
+    addTextStamp,
+    addImageSticker,
+    updateDecoration,
+    removeDecoration,
+    clearAllDecorations,
+    shuffleDecorations,
+  } = useDraggableDecorations([]);
 
   // Trigger celebration confetti on page load
   useEffect(() => {
@@ -34,9 +55,18 @@ export default function Result({
 
   const currentFilterObj = FILTERS.find((f) => f.id === selectedFilter) || FILTERS[0];
 
+  // Deselect any active sticker when clicking background
+  const handleCanvasContainerClick = (e) => {
+    if (e.target === e.currentTarget || e.target.id === 'export-photo-strip') {
+      setSelectedDecorationId(null);
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 animate-fade-in">
-      
+    <div
+      onClick={handleCanvasContainerClick}
+      className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 animate-fade-in"
+    >
       {/* Top Header Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-4 border-b-2 border-base-content/10">
         <div className="space-y-1">
@@ -47,7 +77,7 @@ export default function Result({
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-base-content/70 font-medium">
-            Customize your photo strip with filters, frames, custom text, and export in crystal clear HD.
+            Customize layout, drag & drop stickers and text stamps freely, or unlock mystery results.
           </p>
         </div>
 
@@ -70,10 +100,55 @@ export default function Result({
       {/* Main 2-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         
-        {/* Left Column: Big Center Photo Strip Preview */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-center space-y-4 sm:space-y-6">
+        {/* Left Column: Photo Strip Preview & Quick Playful Actions */}
+        <div className="lg:col-span-6 flex flex-col items-center justify-center space-y-4 sm:space-y-5">
           
-          <div className="w-full flex justify-center p-3 xs:p-5 sm:p-8 bg-base-200/50 rounded-3xl border-2 border-base-content/15 shadow-inner">
+          {/* Quick Playful Action Toolbar */}
+          <div className="w-full flex items-center justify-center gap-2 flex-wrap">
+            <button
+              onClick={() => shuffleDecorations(5)}
+              className="btn btn-xs sm:btn-sm btn-neo-primary rounded-xl font-extrabold text-[11px] sm:text-xs gap-1.5 shadow-neo-sm"
+              title="Scatter random playful stickers and doodles"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{customDecorations.length > 0 ? 'Shuffle ✨' : 'DECORATE ✨'}</span>
+            </button>
+
+            {/* Clear Decorations Button */}
+            {customDecorations.length > 0 && (
+              <button
+                onClick={clearAllDecorations}
+                className="btn btn-xs sm:btn-sm btn-neo-ghost text-error rounded-xl font-bold text-[11px] sm:text-xs gap-1 border border-error/30 hover:bg-error/10 shadow-neo-sm"
+                title="Hapus semua stiker & teks"
+              >
+                <Trash2 className="w-3 h-3" />
+                <span>Hapus Stiker</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => setIsMysteryOpen(true)}
+              className="btn btn-xs sm:btn-sm btn-neo-secondary rounded-xl font-extrabold text-[11px] sm:text-xs gap-1.5 shadow-neo-sm"
+              title="Surprise me with a mystery template & vibe"
+            >
+              <Dices className="w-3.5 h-3.5" />
+              <span>SURPRISE ME 🎲</span>
+            </button>
+
+            <button
+              onClick={onBackToStudio}
+              className="btn btn-xs sm:btn-sm btn-neo-ghost rounded-xl font-bold text-[11px] sm:text-xs gap-1"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Retake</span>
+            </button>
+          </div>
+
+          {/* Photo Strip Frame Container */}
+          <div
+            onClick={handleCanvasContainerClick}
+            className="w-full flex justify-center p-3 xs:p-5 sm:p-8 bg-base-200/50 rounded-3xl border-2 border-base-content/15 shadow-inner relative"
+          >
             <PhotoStrip
               ref={photoStripRef}
               photos={capturedPhotos}
@@ -83,19 +158,31 @@ export default function Result({
               caption={caption}
               dateText={dateText}
               showDate={showDate}
-              stickers={activeStickers}
+              customDecorations={customDecorations}
+              selectedDecorationId={selectedDecorationId}
+              onSelectDecoration={setSelectedDecorationId}
+              onUpdateDecoration={updateDecoration}
+              onRemoveDecoration={removeDecoration}
+              isExporting={isExporting}
+              personality={personality}
+              showPersonalityBadge={showPersonalityBadge}
             />
           </div>
 
-          <p className="text-[10px] sm:text-[11px] font-mono font-medium text-base-content/50 text-center">
-            Tip: Export uses high-DPI rendering (2.5x) for clean, crisp prints.
-          </p>
+          {/* Photo Personality Card */}
+          <div className="w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px]">
+            <PersonalityCard
+              personality={personality}
+              onReroll={onRerollPersonality}
+            />
+          </div>
+
         </div>
 
         {/* Right Column: Editor & Download Actions */}
         <div className="lg:col-span-6 space-y-4 sm:space-y-6">
           
-          {/* Tabbed Photo Customizer */}
+          {/* Tabbed Photo Customizer with Interactive Drag & Drop Controls */}
           <PhotoEditor
             selectedTemplate={selectedTemplate}
             onSelectTemplate={onSelectTemplate}
@@ -109,8 +196,15 @@ export default function Result({
             onDateTextChange={onDateTextChange}
             showDate={showDate}
             onToggleDate={onToggleDate}
-            activeStickers={activeStickers}
-            onToggleSticker={onToggleSticker}
+            personality={personality}
+            showPersonalityBadge={showPersonalityBadge}
+            onTogglePersonalityBadge={() => setShowPersonalityBadge((prev) => !prev)}
+            customDecorations={customDecorations}
+            onAddSticker={addSticker}
+            onAddTextStamp={addTextStamp}
+            onAddImageSticker={addImageSticker}
+            onShuffleDecorations={shuffleDecorations}
+            onClearAllDecorations={clearAllDecorations}
           />
 
           {/* Download & Share Actions Card */}
@@ -128,6 +222,13 @@ export default function Result({
             <DownloadButton
               photoStripRef={photoStripRef}
               onTakeAnother={onTakeAnother}
+              onBeforeExport={() => {
+                setIsExporting(true);
+                setSelectedDecorationId(null);
+              }}
+              onAfterExport={() => {
+                setIsExporting(false);
+              }}
             />
           </div>
 
@@ -135,6 +236,15 @@ export default function Result({
 
       </div>
 
+      {/* Mystery Photobooth Modal */}
+      <MysteryModal
+        isOpen={isMysteryOpen}
+        onClose={() => setIsMysteryOpen(false)}
+        onApply={(mysteryResult) => {
+          if (onApplyMystery) onApplyMystery(mysteryResult);
+          setIsMysteryOpen(false);
+        }}
+      />
     </div>
   );
 }

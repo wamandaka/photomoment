@@ -1,34 +1,41 @@
 import React from 'react';
-import { Camera, Layers, Wand2, Palette, Download, ShieldCheck } from 'lucide-react';
+import { Camera, Layers, Wand2, Palette, Download, ShieldCheck, Dices, Sparkles, Award } from 'lucide-react';
 
 const FEATURES = [
   {
-    icon: Camera,
-    title: 'Live Camera Experience',
-    desc: 'Smooth webcam streaming with mirror mode, rear camera flip, countdown chimes, and realistic shutter flash.',
-    badge: 'Camera',
-    color: 'bg-primary text-primary-content',
-  },
-  {
-    icon: Layers,
-    title: 'Multi-Shot Sequences',
-    desc: 'Choose between 3, 4, or 6 shots. The booth automatically captures the series with timed countdowns between poses.',
-    badge: 'Multi-Shot',
+    icon: Dices,
+    title: 'Mystery Photobooth Mode',
+    desc: 'Hit "Surprise Me" to roll the cosmic dice: animated vibe analysis, multiverse matching, and randomized creative templates!',
+    badge: 'NEW • Mystery',
     color: 'bg-secondary text-secondary-content',
   },
   {
-    icon: Wand2,
-    title: 'Aesthetic Photo Filters',
-    desc: 'Transform photos with 9 real-time filters including 90s Retro, Vintage Warmth, Cyber Neon, B&W, and Pastel Dream.',
-    badge: 'Filters',
-    color: 'bg-accent text-accent-content',
+    icon: Award,
+    title: 'Photo Personality Generator',
+    desc: 'Unlocks a hilarious personality card (Chaotic Cutie, Main Character, Certified Goofball) with RPG stats and witty quotes.',
+    badge: 'NEW • Personality',
+    color: 'bg-primary text-primary-content',
+  },
+  {
+    icon: Sparkles,
+    title: '✨ DECORATE & Doodles',
+    desc: 'One-click scatter random playful doodles, arrows, sticky notes, washi tape, and stamps all over your photo strip.',
+    badge: 'NEW • Decorator',
+    color: 'bg-warning text-warning-content',
   },
   {
     icon: Palette,
-    title: 'Custom Frames & Stickers',
-    desc: 'Select frame colors, borders, custom handwritten captions, auto date stamps, and cute decorative sticker stamps.',
-    badge: 'Customizer',
-    color: 'bg-warning text-warning-content',
+    title: 'Creative Concept Templates',
+    desc: 'Evidence Board, Memory Receipt, Character Card, Parallel Universe, Collectible Edition, Brain.exe, and Memory Map.',
+    badge: '7 Concepts',
+    color: 'bg-accent text-accent-content',
+  },
+  {
+    icon: Wand2,
+    title: 'Aesthetic Retro Filters',
+    desc: 'Transform photos with 9 real-time filters including 90s Retro, Vintage Warmth, Cyber Neon, B&W, and Pastel Dream.',
+    badge: 'Filters',
+    color: 'bg-info text-info-content',
   },
   {
     icon: Download,
@@ -36,13 +43,6 @@ const FEATURES = [
     desc: 'Export crystal clear 300 DPI photo strips ready for printing, direct social sharing, or copying to clipboard.',
     badge: 'Export',
     color: 'bg-success text-success-content',
-  },
-  {
-    icon: ShieldCheck,
-    title: '100% Client-Side & Private',
-    desc: 'Your photos never leave your device. All processing, filtering, and composite generation runs inside your browser.',
-    badge: 'Privacy First',
-    color: 'bg-neutral text-neutral-content',
   },
 ];
 

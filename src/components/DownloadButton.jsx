@@ -5,6 +5,8 @@ import { downloadPhotoStrip, copyPhotoStripToClipboard, sharePhotoStrip } from '
 export default function DownloadButton({
   photoStripRef,
   onTakeAnother,
+  onBeforeExport,
+  onAfterExport,
 }) {
   const [isExporting, setIsExporting] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
@@ -22,6 +24,9 @@ export default function DownloadButton({
     if (!photoStripRef.current || isExporting) return;
     try {
       setIsExporting(true);
+      onBeforeExport?.();
+      // Allow DOM to update and remove selection handles
+      await new Promise((r) => setTimeout(r, 60));
       const filename = await downloadPhotoStrip(photoStripRef.current);
       showToast(`Tersimpan sebagai ${filename}! 📸✨`);
     } catch (err) {
@@ -29,6 +34,7 @@ export default function DownloadButton({
       showToast('Gagal mengunduh gambar. Silakan coba lagi.', 'error');
     } finally {
       setIsExporting(false);
+      onAfterExport?.();
     }
   };
 
@@ -36,6 +42,8 @@ export default function DownloadButton({
     if (!photoStripRef.current || isExporting) return;
     try {
       setIsExporting(true);
+      onBeforeExport?.();
+      await new Promise((r) => setTimeout(r, 60));
       await copyPhotoStripToClipboard(photoStripRef.current);
       showToast('Gambar berhasil disalin ke Clipboard! 📋');
     } catch (err) {
@@ -43,6 +51,7 @@ export default function DownloadButton({
       showToast('Browser tidak mendukung copy gambar langsung.', 'error');
     } finally {
       setIsExporting(false);
+      onAfterExport?.();
     }
   };
 
@@ -50,6 +59,8 @@ export default function DownloadButton({
     if (!photoStripRef.current || isExporting) return;
     try {
       setIsExporting(true);
+      onBeforeExport?.();
+      await new Promise((r) => setTimeout(r, 60));
       await sharePhotoStrip(photoStripRef.current);
       showToast('Dibagikan! 🎉');
     } catch (err) {
@@ -58,6 +69,7 @@ export default function DownloadButton({
       }
     } finally {
       setIsExporting(false);
+      onAfterExport?.();
     }
   };
 

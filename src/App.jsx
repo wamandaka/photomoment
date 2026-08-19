@@ -6,6 +6,10 @@ import Result from './pages/Result';
 import { useCamera } from './hooks/useCamera';
 import { useAudioFx } from './hooks/useAudioFx';
 import { formatPhotoDate, getSamplePhotos } from './utils/photoProcessor';
+import { generatePersonality, analyzePhotosForPersonality } from './utils/personalityGenerator';
+import { generateRandomDecorations } from './utils/randomDecorations';
+import { getRandomFunnyCaption } from './utils/funnyCaptions';
+import { TEMPLATES } from './data/templates';
 
 export default function App() {
   // Navigation State: 'home' | 'photobooth' | 'result'
@@ -29,6 +33,10 @@ export default function App() {
     { id: 'heart', label: 'Heart', emoji: '♡', color: '#FF5E7E' },
     { id: 'sparkle', label: 'Sparkle', emoji: '✦', color: '#FFD166' }
   ]);
+
+  // Creative Mystery & Personality States
+  const [personality, setPersonality] = useState(() => generatePersonality());
+  const [randomDecorations, setRandomDecorations] = useState([]);
 
   // Hooks
   const camera = useCamera();
@@ -67,6 +75,8 @@ export default function App() {
   // Start new session
   const handleTakeAnother = () => {
     setCapturedPhotos([]);
+    setRandomDecorations([]);
+    setPersonality(generatePersonality());
     handleNavigate('photobooth');
   };
 
@@ -86,11 +96,60 @@ export default function App() {
     });
   };
 
+  // ✨ Randomize Decorate / Scatter Doodles
+  const handleRandomDecorate = () => {
+    const newDecs = generateRandomDecorations(5);
+    setRandomDecorations(newDecs);
+  };
+
+  // ✕ Clear Random Floating Decorations / Doodles
+  const handleClearRandomDecorations = () => {
+    setRandomDecorations([]);
+  };
+
+  // 🗑️ Clear All Stickers & Doodles
+  const handleClearAllStickers = () => {
+    setActiveStickers([]);
+    setRandomDecorations([]);
+  };
+
+  // 🎲 Re-roll Personality
+  const handleRerollPersonality = () => {
+    setPersonality(generatePersonality());
+  };
+
+  // 🎲 Apply Mystery Photobooth / Surprise Me result
+  const handleApplyMystery = () => {
+    // Pick from creative and popular templates
+    const creativePool = TEMPLATES.filter((t) => t.category === 'Concepts' || t.category === 'Cute');
+    const randomTmpl = creativePool[Math.floor(Math.random() * creativePool.length)] || TEMPLATES[0];
+
+    setSelectedTemplate(randomTmpl.id);
+    if (randomTmpl.defaultFrame) {
+      setSelectedFrame(randomTmpl.defaultFrame);
+    }
+    if (randomTmpl.defaultFilter) {
+      setSelectedFilter(randomTmpl.defaultFilter);
+    }
+
+    // Generate random funny caption
+    const funny = getRandomFunnyCaption(randomTmpl.id);
+    setCaption(funny);
+
+    // Generate random floating stickers
+    setRandomDecorations(generateRandomDecorations(6));
+
+    // Generate new fresh personality
+    setPersonality(generatePersonality());
+  };
+
   // Demo shortcut for quick testing or users without webcams
-  const handleLoadDemoSession = (count = 4) => {
+  const handleLoadDemoSession = async (count = 4) => {
     const demos = getSamplePhotos(count);
     setCapturedPhotos(demos);
     setTotalShots(count);
+    const detected = await analyzePhotosForPersonality(demos);
+    setPersonality(detected);
     handleNavigate('result');
   };
 
@@ -139,7 +198,11 @@ export default function App() {
             caption={caption}
             dateText={dateText}
             showDate={showDate}
-            onProceedToResult={() => handleNavigate('result')}
+            onProceedToResult={async () => {
+              const detectedPersonality = await analyzePhotosForPersonality(capturedPhotos);
+              setPersonality(detectedPersonality);
+              handleNavigate('result');
+            }}
             onExitStudio={() => handleNavigate('home')}
           />
         )}
@@ -163,12 +226,18 @@ export default function App() {
             onToggleDate={() => setShowDate((prev) => !prev)}
             activeStickers={activeStickers}
             onToggleSticker={handleToggleSticker}
+            randomDecorations={randomDecorations}
+            onRandomDecorate={handleRandomDecorate}
+            onClearRandomDecorations={handleClearRandomDecorations}
+            onClearAllStickers={handleClearAllStickers}
+            personality={personality}
+            onRerollPersonality={handleRerollPersonality}
+            onApplyMystery={handleApplyMystery}
             onTakeAnother={handleTakeAnother}
             onBackToStudio={() => handleNavigate('photobooth')}
           />
         )}
       </main>
-
     </div>
   );
 }

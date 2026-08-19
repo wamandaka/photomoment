@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Camera, Palette, Volume2, VolumeX, Menu, X, Sparkles, Home, Play, Layout } from 'lucide-react';
+import { Camera, Palette, Volume2, VolumeX, Menu, X, Sparkles, Home, Play, Layout, ChevronDown } from 'lucide-react';
 
 const THEMES = [
-  { id: 'cat', name: '🐱 Meow Neko (Cat)' },
-  { id: 'photomoment', name: '🌸 Photomoment (Light)' },
-  { id: 'photomomentDark', name: '🌙 Photomoment (Dark)' },
-  { id: 'retro', name: '📻 Retro 90s' },
-  { id: 'cupcake', name: '🧁 Cupcake' },
-  { id: 'valentine', name: '💖 Valentine' },
-  { id: 'pastel', name: '🎨 Pastel' },
+  { id: 'cat', name: '🐱 Meow Neko' },
+  { id: 'photomoment', name: '🌸 Light Moment' },
+  { id: 'photomomentDark', name: '🌙 Dark Moment' },
+  { id: 'valentine', name: '💌 Valentine Love' },
+  { id: 'garden', name: '🌼 Flower Garden' },
+  { id: 'cupcake', name: '🍓 Strawberry Cupcake' },
+  { id: 'autumn', name: '🧸 Teddy Autumn' },
+  { id: 'retro', name: '📸 Retro 90s' },
+  { id: 'pastel', name: '🎀 Pastel Kawaii' },
   { id: 'cyberpunk', name: '⚡ Cyberpunk' },
-  { id: 'nord', name: '❄️ Nord' },
-  { id: 'synthwave', name: '🌆 Synthwave' },
+  { id: 'nord', name: '❄️ Nord Ice' },
+  { id: 'synthwave', name: '🌆 Synthwave Neon' },
 ];
 
 export default function Navbar({
@@ -23,6 +25,7 @@ export default function Navbar({
   onThemeChange
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const activeThemeObj = THEMES.find((t) => t.id === currentTheme) || THEMES[0];
 
   // Close mobile drawer on navigation
   const handleNav = (view, anchorId = null) => {
@@ -101,39 +104,53 @@ export default function Navbar({
               )}
             </button>
 
-            {/* Theme Selector Dropdown */}
+            {/* Theme Selector Dropdown (Wide 2-Column Grid) */}
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
-                className="btn btn-sm rounded-xl btn-ghost border border-base-content/15 flex items-center gap-1.5 px-2.5"
-                title="Change DaisyUI Theme"
+                className="btn btn-sm rounded-xl btn-ghost border-2 border-base-content/15 flex items-center gap-1.5 px-3 hover:border-primary transition-colors cursor-pointer"
+                title="Ganti Tema UI"
               >
-                <Palette className="w-4 h-4 text-secondary-content" />
-                <span className="text-xs font-bold uppercase tracking-wider">
-                  Theme
+                <Palette className="w-4 h-4 text-primary shrink-0" />
+                <span className="text-xs font-extrabold max-w-[110px] truncate">
+                  {activeThemeObj.name.split(' ')[0]} {activeThemeObj.name.split(' ')[1]}
                 </span>
+                <ChevronDown className="w-3 h-3 opacity-60 shrink-0" />
               </label>
-              <ul
+              <div
                 tabIndex={0}
-                className="dropdown-content z-50 menu p-2 shadow-neo-lg bg-base-100 rounded-2xl w-56 border-2 border-base-content/20 mt-2 max-h-80 overflow-y-auto"
+                className="dropdown-content z-50 p-3 shadow-neo-lg bg-base-100 rounded-3xl w-80 border-3 border-black mt-2 space-y-2"
               >
-                <li className="menu-title text-xs uppercase tracking-wider font-extrabold text-base-content/60 px-3 py-1">
-                  Select Theme
-                </li>
-                {THEMES.map((t) => (
-                  <li key={t.id}>
-                    <button
-                      onClick={() => onThemeChange(t.id)}
-                      className={`text-xs font-semibold rounded-xl flex items-center justify-between py-2 ${
-                        currentTheme === t.id ? 'bg-primary text-primary-content font-bold' : ''
-                      }`}
-                    >
-                      <span className="truncate">{t.name}</span>
-                      {currentTheme === t.id && <span>✓</span>}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                <div className="flex items-center justify-between px-1 pb-1 border-b border-base-content/10">
+                  <span className="text-[11px] uppercase tracking-wider font-extrabold text-base-content/70 flex items-center gap-1">
+                    <Palette className="w-3.5 h-3.5 text-primary" />
+                    <span>Pilih Tema UI ({THEMES.length})</span>
+                  </span>
+                  <span className="badge badge-xs badge-primary font-bold">
+                    DaisyUI
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-1.5 max-h-72 overflow-y-auto pr-0.5">
+                  {THEMES.map((t) => {
+                    const isActive = currentTheme === t.id;
+                    return (
+                      <button
+                        key={t.id}
+                        onClick={() => onThemeChange(t.id)}
+                        className={`text-left p-2 rounded-xl text-xs font-bold transition-all flex items-center justify-between border ${
+                          isActive
+                            ? 'bg-primary text-primary-content border-black shadow-xs font-black'
+                            : 'bg-base-200/60 text-base-content hover:bg-base-300 border-base-content/10'
+                        }`}
+                      >
+                        <span className="truncate">{t.name}</span>
+                        {isActive && <span className="ml-1 text-[10px]">✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* Primary Action Button */}
