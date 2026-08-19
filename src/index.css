@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: hsl(var(--bc) / 0.15);
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Soft Neobrutalism tactile button style */
+  .btn-neo {
+    @apply border-2 border-base-content font-bold shadow-neo transition-all duration-150 active:translate-x-0.5 active:translate-y-0.5 active:shadow-neo-sm;
+  }
+
+  .btn-neo-primary {
+    @apply btn-neo bg-primary text-primary-content hover:bg-primary/90;
+  }
+
+  .btn-neo-secondary {
+    @apply btn-neo bg-secondary text-secondary-content hover:bg-secondary/90;
+  }
+
+  .btn-neo-ghost {
+    @apply btn-neo bg-base-100 text-base-content hover:bg-base-200;
+  }
+
+  /* Soft Neobrutalism Card */
+  .card-neo {
+    @apply bg-base-100 border-2 border-base-content/20 rounded-3xl shadow-neo transition-all duration-200;
+  }
+
+  .card-neo-hover {
+    @apply card-neo hover:-translate-y-1 hover:shadow-neo-lg hover:border-base-content/40;
+  }
+
+  /* Film sprockets for Retro Film strip template */
+  .film-strip-border {
+    background-image: radial-gradient(circle, #2b2d42 35%, transparent 40%);
+    background-size: 16px 24px;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+  }
+}
+
+/* Custom CSS Filters for Photobooth Photos */
+.filter-original {
+  filter: none;
+}
+
+.filter-vintage {
+  filter: sepia(0.35) contrast(1.15) brightness(1.05) saturate(1.2) hue-rotate(-8deg);
+}
+
+.filter-bw {
+  filter: grayscale(1) contrast(1.25) brightness(1.02);
+}
+
+.filter-warm {
+  filter: sepia(0.2) saturate(1.4) brightness(1.08) hue-rotate(-12deg);
+}
+
+.filter-cool {
+  filter: saturate(1.1) brightness(1.02) hue-rotate(15deg) contrast(1.05);
+}
+
+.filter-retro {
+  filter: contrast(1.2) saturate(1.5) sepia(0.15) brightness(0.98);
+}
+
+.filter-cyberpunk {
+  filter: contrast(1.3) saturate(1.7) hue-rotate(290deg) brightness(1.1);
+}
+
+.filter-pastel {
+  filter: brightness(1.12) contrast(0.95) saturate(1.35);
+}
+
+.filter-sepia {
+  filter: sepia(0.85) contrast(1.1) brightness(0.95);
+}
+
+/* Subtle Film Grain Overlay */
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* Print / Canvas capture safety */
+.photo-strip-container {
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar polish */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--b2) / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--bc) / 0.25);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--bc) / 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

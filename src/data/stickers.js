@@ -1,0 +1,18 @@
+export const STICKERS = [
+  { id: "heart", label: "Heart", emoji: "♡", text: "♡", color: "#FF5E7E" },
+  { id: "sparkle", label: "Sparkle", emoji: "✦", text: "✦", color: "#FFD166" },
+  { id: "flower", label: "Flower", emoji: "✿", text: "✿", color: "#FF99C8" },
+  { id: "star", label: "Star", emoji: "★", text: "★", color: "#4D96FF" },
+  { id: "smile", label: "Smile", emoji: "☺", text: "☺", color: "#6BCB77" },
+  { id: "bow", label: "Ribbon", emoji: "🎀", text: "🎀" },
+  { id: "camera", label: "Camera", emoji: "📸", text: "📸" },
+  { id: "peace", label: "Peace", emoji: "✌️", text: "✌️" },
+  { id: "fire", label: "Fire", emoji: "🔥", text: "🔥" },
+  { id: "butterfly", label: "Butterfly", emoji: "🦋", text: "🦋" },
+  { id: "cherries", label: "Cherries", emoji: "🍒", text: "🍒" },
+  { id: "clover", label: "Lucky", emoji: "🍀", text: "🍀" },
+  { id: "tag-besties", label: "BESTIES", isBadge: true, text: "BESTIES ♡", bg: "#FF5E7E", textCol: "#FFFFFF" },
+  { id: "tag-vibes", label: "VIBES", isBadge: true, text: "GOOD VIBES ✦", bg: "#4D96FF", textCol: "#FFFFFF" },
+  { id: "tag-cheese", label: "CHEESE", isBadge: true, text: "SAY CHEESE 📸", bg: "#FFE066", textCol: "#1E1E24" },
+  { id: "tag-forever", label: "FOREVER", isBadge: true, text: "MEMORIES 2026", bg: "#2B2D42", textCol: "#FFFFFF" },
+];

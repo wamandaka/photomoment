@@ -1,0 +1,140 @@
+import React, { useRef, useEffect } from 'react';
+import { Sparkles, ArrowLeft, RotateCcw, Heart, Share2, Download, Camera } from 'lucide-react';
+import PhotoStrip from '../components/PhotoStrip';
+import PhotoEditor from '../components/PhotoEditor';
+import DownloadButton from '../components/DownloadButton';
+import { FILTERS } from '../data/filters';
+import { fireConfetti } from '../utils/downloadImage';
+
+export default function Result({
+  capturedPhotos,
+  selectedTemplate,
+  onSelectTemplate,
+  selectedFilter,
+  onSelectFilter,
+  selectedFrame,
+  onSelectFrame,
+  caption,
+  onCaptionChange,
+  dateText,
+  onDateTextChange,
+  showDate,
+  onToggleDate,
+  activeStickers,
+  onToggleSticker,
+  onTakeAnother,
+  onBackToStudio,
+}) {
+  const photoStripRef = useRef(null);
+
+  // Trigger celebration confetti on page load
+  useEffect(() => {
+    fireConfetti();
+  }, []);
+
+  const currentFilterObj = FILTERS.find((f) => f.id === selectedFilter) || FILTERS[0];
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 animate-fade-in">
+      
+      {/* Top Header Bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b-2 border-base-content/10">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="badge badge-secondary font-extrabold text-xs">READY TO EXPORT</span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-base-content font-display tracking-tight flex items-center gap-2">
+              Your Memories <Heart className="w-6 h-6 text-primary fill-current" />
+            </h1>
+          </div>
+          <p className="text-xs sm:text-sm text-base-content/70 font-medium">
+            Customize your photo strip with filters, frames, custom text, and export in crystal clear HD.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onBackToStudio}
+            className="btn btn-sm btn-neo-ghost rounded-xl font-bold gap-1 text-xs"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to Studio
+          </button>
+          <button
+            onClick={onTakeAnother}
+            className="btn btn-sm btn-neo-secondary rounded-xl font-bold gap-1 text-xs"
+          >
+            <RotateCcw className="w-3.5 h-3.5" /> New Session
+          </button>
+        </div>
+      </div>
+
+      {/* Main 2-Column Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* Left Column: Big Center Photo Strip Preview */}
+        <div className="lg:col-span-6 flex flex-col items-center justify-center space-y-6">
+          
+          <div className="w-full flex justify-center p-4 sm:p-8 bg-base-200/50 rounded-3xl border-2 border-base-content/15 shadow-inner">
+            <PhotoStrip
+              ref={photoStripRef}
+              photos={capturedPhotos}
+              templateId={selectedTemplate}
+              filterClass={currentFilterObj.cssClass}
+              frameId={selectedFrame}
+              caption={caption}
+              dateText={dateText}
+              showDate={showDate}
+              stickers={activeStickers}
+            />
+          </div>
+
+          <p className="text-[11px] font-mono font-medium text-base-content/50 text-center">
+            Tip: Export uses high-DPI rendering (2.5x) for clean, crisp prints.
+          </p>
+        </div>
+
+        {/* Right Column: Editor & Download Actions */}
+        <div className="lg:col-span-6 space-y-6">
+          
+          {/* Tabbed Photo Customizer */}
+          <PhotoEditor
+            selectedTemplate={selectedTemplate}
+            onSelectTemplate={onSelectTemplate}
+            selectedFilter={selectedFilter}
+            onSelectFilter={onSelectFilter}
+            selectedFrame={selectedFrame}
+            onSelectFrame={onSelectFrame}
+            caption={caption}
+            onCaptionChange={onCaptionChange}
+            dateText={dateText}
+            onDateTextChange={onDateTextChange}
+            showDate={showDate}
+            onToggleDate={onToggleDate}
+            activeStickers={activeStickers}
+            onToggleSticker={onToggleSticker}
+          />
+
+          {/* Download & Share Actions Card */}
+          <div className="card-neo p-6 bg-base-100 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-base-content/70 flex items-center gap-1.5">
+                <Download className="w-4 h-4 text-primary" />
+                <span>Save Your Strip</span>
+              </span>
+              <span className="badge badge-sm badge-success font-bold text-white">
+                PNG • 300 DPI
+              </span>
+            </div>
+
+            <DownloadButton
+              photoStripRef={photoStripRef}
+              onTakeAnother={onTakeAnother}
+            />
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
