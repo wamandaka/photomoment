@@ -1,4 +1,8 @@
 export const FRAME_COLORS = [
+  { id: "cat-pink", name: "🐾 Neko Pink", hex: "#FFE5EC", textHex: "#800F2F", borderHex: "#FFB3C1", hasCatEars: true, earColor: "#FFE5EC", innerEarColor: "#FFB3C1" },
+  { id: "cat-cream", name: "🐱 Calico Cream", hex: "#FFF8EE", textHex: "#5C3A21", borderHex: "#FAD899", hasCatEars: true, earColor: "#FFF8EE", innerEarColor: "#FFC896" },
+  { id: "cat-black", name: "🐈‍⬛ Kuro Neko", hex: "#202028", textHex: "#FFE5EC", borderHex: "#3F3F50", hasCatEars: true, earColor: "#202028", innerEarColor: "#FF85A1" },
+  { id: "cat-matcha", name: "🍵 Matcha Neko", hex: "#EDF7EE", textHex: "#25522B", borderHex: "#C7E8CB", hasCatEars: true, earColor: "#EDF7EE", innerEarColor: "#A8D5AE" },
   { id: "white", name: "Clean White", hex: "#FFFFFF", textHex: "#1E1E24", borderHex: "#E5E7EB" },
   { id: "cream", name: "Warm Cream", hex: "#FAF6EE", textHex: "#2C2A29", borderHex: "#E4DCCF" },
   { id: "black", name: "Matte Black", hex: "#18181B", textHex: "#F4F4F5", borderHex: "#27272A" },

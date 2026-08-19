@@ -1,5 +1,18 @@
 export const TEMPLATES = [
   {
+    id: "cat",
+    name: "Neko Cat Club 🐱",
+    tagline: "Cute cat ears & playful paw prints",
+    category: "Cute",
+    description: "Adorable 3D cat ears on top, paw watermark stamps, cat whiskers, and cozy pastel tones.",
+    aspectRatio: "3:4",
+    defaultFrame: "cat-pink",
+    defaultFilter: "pastel",
+    bgPattern: "paws",
+    badge: "🐱 MEOW",
+    iconName: "Heart",
+  },
+  {
     id: "classic",
     name: "Classic Strip",
     tagline: "The timeless 4-cut photobooth strip",

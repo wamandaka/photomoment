@@ -31,6 +31,43 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         templateId === 'retro' ? 'font-mono' : ''
       }`}
     >
+      {/* 0. CAT EARS ORNAMENT (When cat template or cat frame is selected) */}
+      {(currentFrame.hasCatEars || templateId === 'cat') && (
+        <>
+          {/* Left Cat Ear */}
+          <div className="absolute -top-5 sm:-top-6 left-6 sm:left-8 w-8 h-8 sm:w-10 sm:h-10 z-20 pointer-events-none">
+            <div
+              style={{
+                backgroundColor: currentFrame.earColor || currentFrame.hex,
+                borderColor: '#000000',
+              }}
+              className="w-full h-full border-3 rounded-tl-3xl rounded-tr-md transform -rotate-12 relative overflow-hidden shadow-neo-sm"
+            >
+              <div
+                style={{ backgroundColor: currentFrame.innerEarColor || '#FF85A1' }}
+                className="absolute bottom-0 right-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded-tl-2xl rounded-tr-sm opacity-90"
+              />
+            </div>
+          </div>
+
+          {/* Right Cat Ear */}
+          <div className="absolute -top-5 sm:-top-6 right-6 sm:right-8 w-8 h-8 sm:w-10 sm:h-10 z-20 pointer-events-none">
+            <div
+              style={{
+                backgroundColor: currentFrame.earColor || currentFrame.hex,
+                borderColor: '#000000',
+              }}
+              className="w-full h-full border-3 rounded-tr-3xl rounded-tl-md transform rotate-12 relative overflow-hidden shadow-neo-sm"
+            >
+              <div
+                style={{ backgroundColor: currentFrame.innerEarColor || '#FF85A1' }}
+                className="absolute bottom-0 left-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded-tr-2xl rounded-tl-sm opacity-90"
+              />
+            </div>
+          </div>
+        </>
+      )}
+
       {/* 1. RETRO FILM SPROCKETS (Only for retro template) */}
       {templateId === 'retro' && (
         <>
@@ -53,7 +90,22 @@ const PhotoStrip = forwardRef(function PhotoStrip(
       )}
 
       {/* 3. HEADER SECTION */}
-      {templateId === 'classic' && (
+      {(templateId === 'cat' || (currentFrame.hasCatEars && templateId !== 'retro' && templateId !== 'polaroid')) && (
+        <div className="text-center pb-2 border-b border-current/15 mb-2.5 pt-0.5">
+          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-black tracking-widest uppercase font-display">
+            <span className="text-xs sm:text-sm animate-bounce">🐾</span>
+            <span className="text-primary font-extrabold">NEKO CAT CLUB</span>
+            <span className="text-xs sm:text-sm animate-bounce">🐾</span>
+          </div>
+          <div className="flex items-center justify-center gap-1 text-[9px] font-mono opacity-70 tracking-wider font-bold">
+            <span>=^•ﻌ•^=</span>
+            <span>MEOW MEMORIES</span>
+            <span>=^•ﻌ•^=</span>
+          </div>
+        </div>
+      )}
+
+      {templateId === 'classic' && !currentFrame.hasCatEars && (
         <div className="text-center pb-2.5 border-b border-current/15 mb-3">
           <div className="flex items-center justify-center gap-1.5 text-xs font-black tracking-widest uppercase font-display">
             <Camera className="w-3.5 h-3.5 text-primary" />
@@ -77,7 +129,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         </div>
       )}
 
-      {templateId === 'minimal' && (
+      {templateId === 'minimal' && !currentFrame.hasCatEars && (
         <div className="text-center pb-2 mb-3">
           <p className="text-[9px] font-mono tracking-[0.3em] uppercase opacity-70">
             — STUDIO MEMORY —
@@ -85,7 +137,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         </div>
       )}
 
-      {templateId === 'cute' && (
+      {templateId === 'cute' && !currentFrame.hasCatEars && (
         <div className="text-center pb-2 mb-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-200/60 text-pink-600 text-xs font-extrabold tracking-wider border border-pink-300">
             <span>✿</span> Y2K PHOTO CLUB <span>✿</span>
@@ -93,7 +145,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         </div>
       )}
 
-      {templateId === 'grid' && (
+      {templateId === 'grid' && !currentFrame.hasCatEars && (
         <div className="text-center pb-2 mb-2">
           <div className="text-[11px] font-black tracking-widest uppercase font-display">
             ★ PHOTOMOMENT 2x2 ★
@@ -108,14 +160,16 @@ const PhotoStrip = forwardRef(function PhotoStrip(
             ? 'grid grid-cols-2 gap-2.5'
             : templateId === 'retro'
             ? 'px-3 space-y-2.5'
-            : 'space-y-3'
+            : 'space-y-2.5 sm:space-y-3'
         }`}
       >
         {photos.map((photoUrl, idx) => (
           <div
             key={idx}
             className={`relative overflow-hidden border-2 transition-all ${
-              templateId === 'cute'
+              templateId === 'cat' || currentFrame.hasCatEars
+                ? 'rounded-2xl border-black/25 shadow-sm aspect-[4/3]'
+                : templateId === 'cute'
                 ? 'rounded-2xl border-pink-300 shadow-sm aspect-square'
                 : templateId === 'polaroid'
                 ? 'rounded-md border-black/10 shadow-inner aspect-square'
@@ -141,13 +195,20 @@ const PhotoStrip = forwardRef(function PhotoStrip(
             )}
 
             {/* Template Specific Photo Overlays */}
+            {(templateId === 'cat' || currentFrame.hasCatEars) && (
+              <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-md bg-black/40 text-[9px] font-mono text-white backdrop-blur-xs flex items-center gap-0.5">
+                <span>🐾</span>
+                <span>0{idx + 1}</span>
+              </div>
+            )}
+
             {templateId === 'retro' && (
               <div className="absolute bottom-1 right-2 text-[9px] font-mono text-orange-400/90 drop-shadow-sm">
                 '26 08 19
               </div>
             )}
 
-            {templateId === 'classic' && (
+            {templateId === 'classic' && !currentFrame.hasCatEars && (
               <div className="absolute bottom-1 right-1.5 px-1.5 py-0.5 rounded bg-black/40 text-[9px] font-mono text-white backdrop-blur-xs">
                 0{idx + 1}
               </div>
@@ -191,6 +252,8 @@ const PhotoStrip = forwardRef(function PhotoStrip(
             className={`font-bold leading-tight break-words px-1 ${
               templateId === 'polaroid'
                 ? 'font-handwriting text-lg sm:text-2xl text-base-content'
+                : templateId === 'cat' || currentFrame.hasCatEars
+                ? 'font-display text-xs sm:text-sm text-primary font-extrabold'
                 : templateId === 'cute'
                 ? 'font-display text-xs sm:text-sm text-pink-600 font-extrabold'
                 : templateId === 'retro'
@@ -200,15 +263,23 @@ const PhotoStrip = forwardRef(function PhotoStrip(
                 : 'font-handwriting text-base sm:text-xl text-primary font-extrabold'
             }`}
           >
-            {caption}
+            {(templateId === 'cat' || currentFrame.hasCatEars) ? (
+              <span className="inline-flex items-center justify-center gap-1">
+                <span>ฅ^•ﻌ•^ฅ</span> {caption}
+              </span>
+            ) : (
+              caption
+            )}
           </p>
         )}
 
         {showDate && dateText && (
           <div className="flex items-center justify-center gap-1 text-[10px] font-mono font-bold tracking-wider opacity-70">
+            {(templateId === 'cat' || currentFrame.hasCatEars) && <span>🐾</span>}
             <span>{dateText}</span>
             <span>•</span>
-            <span>PHOTOMOMENT</span>
+            <span>{templateId === 'cat' ? 'MEOWBOOTH' : 'PHOTOMOMENT'}</span>
+            {(templateId === 'cat' || currentFrame.hasCatEars) && <span>🐾</span>}
           </div>
         )}
       </div>

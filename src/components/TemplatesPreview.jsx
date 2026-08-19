@@ -63,6 +63,29 @@ export default function TemplatesPreview({ onSelectTemplate }) {
                 <div className="my-3 py-4 px-6 bg-base-200/70 rounded-2xl border-2 border-base-content/10 flex items-center justify-center min-h-[220px] group-hover:border-primary/40 transition-colors">
                   
                   {/* Visual representation depending on template */}
+                  {tmpl.id === 'cat' && (
+                    <div className="relative pt-3">
+                      {/* Mini Cat Ears */}
+                      <div className="absolute top-0.5 left-3 w-4 h-4 bg-pink-100 border-2 border-black rounded-tl-xl rounded-tr-xs transform -rotate-12">
+                        <div className="absolute bottom-0 right-0 w-2 h-2 bg-pink-300 rounded-tl-xs" />
+                      </div>
+                      <div className="absolute top-0.5 right-3 w-4 h-4 bg-pink-100 border-2 border-black rounded-tr-xl rounded-tl-xs transform rotate-12">
+                        <div className="absolute bottom-0 left-0 w-2 h-2 bg-pink-300 rounded-tr-xs" />
+                      </div>
+                      
+                      <div className="w-24 bg-pink-100 p-2 rounded-xl border-2 border-black shadow-neo-sm space-y-1">
+                        <div className="text-[6px] font-bold text-center text-pink-700">🐾 NEKO 🐾</div>
+                        {[0, 1, 2].map((i) => (
+                          <div key={i} className="aspect-[4/3] bg-pink-50 rounded-lg overflow-hidden border border-pink-300 relative">
+                            <img src={samplePhotos[i]} alt="sample" className="w-full h-full object-cover filter-pastel" />
+                            <span className="absolute top-0.5 right-0.5 text-[6px]">🐾</span>
+                          </div>
+                        ))}
+                        <div className="text-[5px] font-mono text-center text-pink-600 font-bold">meow ♡</div>
+                      </div>
+                    </div>
+                  )}
+
                   {tmpl.id === 'classic' && (
                     <div className="w-24 bg-white p-2 rounded-lg border-2 border-black shadow-neo-sm space-y-1">
                       <div className="text-[6px] font-bold text-center text-black">PHOTO</div>

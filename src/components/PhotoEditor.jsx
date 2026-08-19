@@ -6,13 +6,14 @@ import TemplateSelector from './TemplateSelector';
 import { STICKERS } from '../data/stickers';
 
 const CAPTION_SUGGESTIONS = [
+  'Purr-fect moments 🐾',
+  'Meow & forever 🐱💕',
   'Our little moment ♡',
+  'Certified Cat Person ฅ^•ﻌ•^ฅ',
   'Best day with besties ✨',
   'Photobooth memories 📸',
-  'Forever & always 💕',
   'Say cheese! 😄✌️',
-  'Unforgettable vibes 🌟',
-  'Date night 2026 🌙',
+  'Cozy kitty vibes 🐟🧶',
 ];
 
 export default function PhotoEditor({
