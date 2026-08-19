@@ -48,6 +48,26 @@ export default function App() {
     localStorage.setItem('photomoment_theme', theme);
   }, [theme]);
 
+  // Prevent accidental page reload or close when user has captured photos or is editing
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      const hasUnsavedWork =
+        (currentView === 'photobooth' && capturedPhotos.length > 0) ||
+        (currentView === 'result' && capturedPhotos.length > 0);
+
+      if (hasUnsavedWork) {
+        e.preventDefault();
+        e.returnValue = 'Foto dan editan Anda belum tersimpan. Apakah Anda yakin ingin memuat ulang halaman?';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [currentView, capturedPhotos.length]);
+
   // Clean up camera stream if navigating away from studio
   const handleNavigate = (view) => {
     if (currentView === 'photobooth' && view !== 'photobooth') {
