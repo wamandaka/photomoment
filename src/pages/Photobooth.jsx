@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Camera, Sparkles, ArrowRight, RotateCcw, Layout, Settings2, Sliders, Volume2, Shield } from 'lucide-react';
+import { Camera, Sparkles, ArrowRight, RotateCcw, Layout, Settings2, Sliders, Volume2, Shield, Timer } from 'lucide-react';
 import CameraPreview from '../components/CameraPreview';
 import CaptureButton from '../components/CaptureButton';
 import PhotoThumbnails from '../components/PhotoThumbnails';
@@ -8,6 +8,13 @@ import TemplateSelector from '../components/TemplateSelector';
 import RetakeModal from '../components/RetakeModal';
 import { SHOT_OPTIONS, TEMPLATES } from '../data/templates';
 import { FILTERS } from '../data/filters';
+
+export const COUNTDOWN_OPTIONS = [
+  { seconds: 0, label: 'Instan', short: '0s' },
+  { seconds: 3, label: '3 Detik', short: '3s' },
+  { seconds: 5, label: '5 Detik', short: '5s' },
+  { seconds: 10, label: '10 Detik', short: '10s' },
+];
 
 export default function Photobooth({
   camera,
@@ -28,7 +35,8 @@ export default function Photobooth({
   onProceedToResult,
   onExitStudio,
 }) {
-  const [countdown, setCountdown] = useState(null); // null | 3 | 2 | 1 | 0
+  const [countdown, setCountdown] = useState(null); // null | number
+  const [timerSeconds, setTimerSeconds] = useState(3); // 0 | 3 | 5 | 10
   const [isCapturing, setIsCapturing] = useState(false);
   const [flashTrigger, setFlashTrigger] = useState(false);
   const [retakeModalOpen, setRetakeModalOpen] = useState(false);
@@ -59,12 +67,14 @@ export default function Photobooth({
     for (let s = 0; s < remainingShotsNeeded; s++) {
       if (captureLoopAbortRef.current) break;
 
-      // 3-second countdown
-      for (let c = 3; c >= 1; c--) {
-        if (captureLoopAbortRef.current) break;
-        setCountdown(c);
-        audioFx.playTick(false);
-        await sleep(950);
+      // Dynamic countdown if timerSeconds > 0
+      if (timerSeconds > 0) {
+        for (let c = timerSeconds; c >= 1; c--) {
+          if (captureLoopAbortRef.current) break;
+          setCountdown(c);
+          audioFx.playTick(false);
+          await sleep(950);
+        }
       }
 
       if (captureLoopAbortRef.current) break;
@@ -98,7 +108,7 @@ export default function Photobooth({
     if (currentTotal >= totalShots) {
       audioFx.playSuccess();
     }
-  }, [camera, isCapturing, totalShots, capturedPhotos.length, audioFx, onAddPhoto]);
+  }, [camera, isCapturing, totalShots, capturedPhotos.length, timerSeconds, audioFx, onAddPhoto]);
 
   // Handle single shot capture (if retaking or manual single shot)
   const handleSingleCapture = useCallback(async () => {
@@ -106,10 +116,12 @@ export default function Photobooth({
 
     setIsCapturing(true);
 
-    for (let c = 3; c >= 1; c--) {
-      setCountdown(c);
-      audioFx.playTick(false);
-      await sleep(950);
+    if (timerSeconds > 0) {
+      for (let c = timerSeconds; c >= 1; c--) {
+        setCountdown(c);
+        audioFx.playTick(false);
+        await sleep(950);
+      }
     }
 
     setCountdown(0);
@@ -125,7 +137,7 @@ export default function Photobooth({
     setFlashTrigger(false);
     setCountdown(null);
     setIsCapturing(false);
-  }, [camera, isCapturing, audioFx, onAddPhoto]);
+  }, [camera, isCapturing, timerSeconds, audioFx, onAddPhoto]);
 
   const allPhotosReady = capturedPhotos.length >= totalShots;
   const currentFilterObj = FILTERS.find((f) => f.id === selectedFilter) || FILTERS[0];
@@ -147,25 +159,51 @@ export default function Photobooth({
           </p>
         </div>
 
-        {/* Shot Count Switcher (3, 4, 6) */}
+        {/* Studio Switchers (Shots & Countdown Timer) */}
         {!isCapturing && capturedPhotos.length === 0 && (
-          <div className="flex items-center gap-1.5 sm:gap-2 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
-            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 sm:px-2 text-base-content/60">
-              Shots:
-            </span>
-            {SHOT_OPTIONS.map((opt) => (
-              <button
-                key={opt.count}
-                onClick={() => onChangeTotalShots(opt.count)}
-                className={`btn btn-xs sm:btn-sm rounded-xl font-bold transition-all ${
-                  totalShots === opt.count
-                    ? 'btn-primary shadow-neo-sm'
-                    : 'btn-ghost text-base-content hover:bg-base-300'
-                }`}
-              >
-                {opt.count}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Shot Count Switcher (1 - 6) */}
+            <div className="flex items-center gap-1 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
+              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 text-base-content/60">
+                Shots:
+              </span>
+              {SHOT_OPTIONS.map((opt) => (
+                <button
+                  key={opt.count}
+                  onClick={() => onChangeTotalShots(opt.count)}
+                  className={`btn btn-xs sm:btn-sm rounded-xl font-bold transition-all ${
+                    totalShots === opt.count
+                      ? 'btn-primary shadow-neo-sm'
+                      : 'btn-ghost text-base-content hover:bg-base-300'
+                  }`}
+                  title={opt.desc}
+                >
+                  {opt.count}
+                </button>
+              ))}
+            </div>
+
+            {/* Countdown Timer Switcher (0s, 3s, 5s, 10s) */}
+            <div className="flex items-center gap-1 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
+              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 text-base-content/60 flex items-center gap-1">
+                <Timer className="w-3.5 h-3.5 text-primary" />
+                <span>Timer:</span>
+              </span>
+              {COUNTDOWN_OPTIONS.map((t) => (
+                <button
+                  key={t.seconds}
+                  onClick={() => setTimerSeconds(t.seconds)}
+                  className={`btn btn-xs sm:btn-sm rounded-xl font-bold transition-all ${
+                    timerSeconds === t.seconds
+                      ? 'btn-primary shadow-neo-sm'
+                      : 'btn-ghost text-base-content hover:bg-base-300'
+                  }`}
+                  title={`Hitung mundur ${t.label}`}
+                >
+                  {t.short}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -203,6 +241,7 @@ export default function Photobooth({
                 disabled={camera.status !== 'ready'}
                 currentCount={capturedPhotos.length}
                 totalCount={totalShots}
+                timerSeconds={timerSeconds}
               />
             ) : (
               <div className="text-center space-y-3 sm:space-y-4 py-2">

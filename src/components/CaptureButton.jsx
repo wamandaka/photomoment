@@ -6,7 +6,8 @@ export default function CaptureButton({
   isCapturing,
   disabled = false,
   currentCount = 0,
-  totalCount = 4
+  totalCount = 4,
+  timerSeconds = 3,
 }) {
   return (
     <div className="flex flex-col items-center justify-center space-y-3">
@@ -48,7 +49,7 @@ export default function CaptureButton({
           )}
         </p>
         <p className="text-[11px] font-medium text-base-content/60">
-          Takes {totalCount} poses automatically with countdown
+          Takes {totalCount} poses automatically ({timerSeconds === 0 ? 'Instan / No Timer' : `Timer ${timerSeconds} detik per shot`})
         </p>
       </div>
 
