@@ -66,20 +66,20 @@ export default function DownloadButton({
       
       {/* Toast Alert Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 max-w-sm mx-auto sm:mx-0 animate-bounce">
           <div
-            className={`alert shadow-neo border-2 border-base-content rounded-2xl flex items-center gap-2 text-sm font-bold ${
+            className={`alert shadow-neo border-2 border-base-content rounded-2xl flex items-center gap-2 text-xs sm:text-sm font-bold ${
               toastType === 'success'
                 ? 'bg-success text-success-content'
                 : 'bg-error text-error-content'
             }`}
           >
             {toastType === 'success' ? (
-              <Check className="w-5 h-5" />
+              <Check className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
             ) : (
-              <AlertCircle className="w-5 h-5" />
+              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
             )}
-            <span>{toastMessage}</span>
+            <span className="truncate">{toastMessage}</span>
           </div>
         </div>
       )}
@@ -89,48 +89,52 @@ export default function DownloadButton({
         onClick={handleDownload}
         disabled={isExporting}
         id="download-final-png-btn"
-        className="btn btn-lg btn-neo-primary w-full rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-neo-lg"
+        className="btn btn-md sm:btn-lg btn-neo-primary w-full rounded-2xl font-extrabold text-sm sm:text-lg flex items-center justify-center gap-2 sm:gap-2.5 shadow-neo-lg"
       >
         {isExporting ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
             <span>Memproses Foto HD...</span>
           </>
         ) : (
           <>
-            <Download className="w-5 h-5" strokeWidth={2.5} />
+            <Download className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
             <span>Download Photo Strip (.PNG)</span>
           </>
         )}
       </button>
 
       {/* Secondary Actions Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
         <button
           onClick={handleCopy}
           disabled={isExporting}
-          className="btn btn-md btn-neo-ghost rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2"
+          className="btn btn-sm sm:btn-md btn-neo-ghost rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2"
         >
-          <Copy className="w-4 h-4" />
-          <span>Copy Image</span>
+          <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span>Copy</span>
         </button>
 
         {typeof navigator !== 'undefined' && navigator.share && (
           <button
             onClick={handleShare}
             disabled={isExporting}
-            className="btn btn-md btn-neo-ghost rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2"
+            className="btn btn-sm sm:btn-md btn-neo-ghost rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2"
           >
-            <Share2 className="w-4 h-4" />
+            <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Share</span>
           </button>
         )}
 
         <button
           onClick={onTakeAnother}
-          className="btn btn-md btn-neo-secondary rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 col-span-2 sm:col-span-1"
+          className={`btn btn-sm sm:btn-md btn-neo-secondary rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 ${
+            typeof navigator !== 'undefined' && navigator.share
+              ? 'col-span-2 sm:col-span-1'
+              : 'col-span-1'
+          }`}
         >
-          <RotateCcw className="w-4 h-4" />
+          <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span>Take Another</span>
         </button>
       </div>

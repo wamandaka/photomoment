@@ -50,13 +50,13 @@ export default function HowItWorks({ onStartPhotobooth }) {
         </div>
 
         {/* 3 Step Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 relative">
           {STEPS.map((item, index) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.step}
-                className="card-neo-hover p-8 relative flex flex-col justify-between group"
+                className="card-neo-hover p-5 sm:p-8 relative flex flex-col justify-between group"
               >
                 {/* Step Number Ribbon */}
                 <div className="flex items-center justify-between mb-6">

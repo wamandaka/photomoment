@@ -131,14 +131,14 @@ export default function Photobooth({
   const currentFilterObj = FILTERS.find((f) => f.id === selectedFilter) || FILTERS[0];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 animate-fade-in">
       
       {/* Studio Header Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b-2 border-base-content/10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-4 border-b-2 border-base-content/10">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="badge badge-primary font-bold text-xs">LIVE STUDIO</span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-base-content font-display tracking-tight">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-base-content font-display tracking-tight">
               Photobooth Studio
             </h1>
           </div>
@@ -149,8 +149,8 @@ export default function Photobooth({
 
         {/* Shot Count Switcher (3, 4, 6) */}
         {!isCapturing && capturedPhotos.length === 0 && (
-          <div className="flex items-center gap-2 bg-base-200/70 p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
-            <span className="text-xs font-extrabold uppercase tracking-wider px-2 text-base-content/60">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
+            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 sm:px-2 text-base-content/60">
               Shots:
             </span>
             {SHOT_OPTIONS.map((opt) => (
@@ -171,10 +171,10 @@ export default function Photobooth({
       </div>
 
       {/* Main Studio 2-Column Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         
         {/* Left Column: Live Camera & Primary Controls */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-4 sm:space-y-6">
           
           {/* Camera Container */}
           <CameraPreview
@@ -195,7 +195,7 @@ export default function Photobooth({
           />
 
           {/* Capture Trigger Area */}
-          <div className="card-neo p-6 bg-base-100 space-y-5">
+          <div className="card-neo p-4 sm:p-6 bg-base-100 space-y-4 sm:space-y-5">
             {!allPhotosReady ? (
               <CaptureButton
                 onCapture={startCaptureSequence}
@@ -205,34 +205,34 @@ export default function Photobooth({
                 totalCount={totalShots}
               />
             ) : (
-              <div className="text-center space-y-4 py-2">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/20 text-success text-sm font-extrabold border-2 border-success">
+              <div className="text-center space-y-3 sm:space-y-4 py-2">
+                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-success/20 text-success text-xs sm:text-sm font-extrabold border-2 border-success">
                   <Sparkles className="w-4 h-4" /> ALL {totalShots} PHOTOS CAPTURED!
                 </div>
                 <p className="text-xs sm:text-sm text-base-content/70 max-w-sm mx-auto">
                   Your photo strip is ready! Proceed to the editor to choose filters, frames, and download.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 pt-2">
                   <button
                     onClick={onProceedToResult}
                     id="proceed-to-editor-btn"
-                    className="btn btn-lg btn-neo-primary rounded-2xl w-full sm:w-auto px-8 font-bold gap-2 text-base shadow-neo-lg"
+                    className="btn btn-md sm:btn-lg btn-neo-primary rounded-2xl w-full sm:w-auto px-6 sm:px-8 font-bold gap-2 text-sm sm:text-base shadow-neo-lg"
                   >
                     <span>Customize Memories</span>
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                   <button
                     onClick={() => setRetakeModalOpen(true)}
-                    className="btn btn-md btn-neo-ghost rounded-2xl font-bold text-xs"
+                    className="btn btn-sm sm:btn-md btn-neo-ghost rounded-2xl font-bold text-xs"
                   >
-                    <RotateCcw className="w-4 h-4 mr-1" /> Retake All
+                    <RotateCcw className="w-3.5 h-3.5 mr-1" /> Retake All
                   </button>
                 </div>
               </div>
             )}
 
             {/* Thumbnails row */}
-            <div className="pt-4 border-t border-base-content/10">
+            <div className="pt-3 sm:pt-4 border-t border-base-content/10">
               <PhotoThumbnails
                 photos={capturedPhotos}
                 totalShots={totalShots}
@@ -247,10 +247,10 @@ export default function Photobooth({
         </div>
 
         {/* Right Column: Live Photo Strip Preview & Quick Customizers */}
-        <div className="lg:col-span-5 space-y-6">
+        <div className="lg:col-span-5 space-y-4 sm:space-y-6">
           
           {/* Live Strip Card */}
-          <div className="card-neo p-6 bg-base-200/50 space-y-4">
+          <div className="card-neo p-4 sm:p-6 bg-base-200/50 space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold uppercase tracking-wider text-base-content/70 flex items-center gap-1.5">
                 <Layout className="w-4 h-4 text-primary" />

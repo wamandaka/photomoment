@@ -35,15 +35,15 @@ export default function Result({
   const currentFilterObj = FILTERS.find((f) => f.id === selectedFilter) || FILTERS[0];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 animate-fade-in">
       
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b-2 border-base-content/10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-4 border-b-2 border-base-content/10">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="badge badge-secondary font-extrabold text-xs">READY TO EXPORT</span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-base-content font-display tracking-tight flex items-center gap-2">
-              Your Memories <Heart className="w-6 h-6 text-primary fill-current" />
+            <h1 className="text-xl sm:text-3xl font-extrabold text-base-content font-display tracking-tight flex items-center gap-1.5 sm:gap-2">
+              Your Memories <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-primary fill-current" />
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-base-content/70 font-medium">
@@ -51,16 +51,16 @@ export default function Result({
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={onBackToStudio}
-            className="btn btn-sm btn-neo-ghost rounded-xl font-bold gap-1 text-xs"
+            className="btn btn-xs sm:btn-sm btn-neo-ghost rounded-xl font-bold gap-1 text-xs flex-1 sm:flex-initial"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Studio
           </button>
           <button
             onClick={onTakeAnother}
-            className="btn btn-sm btn-neo-secondary rounded-xl font-bold gap-1 text-xs"
+            className="btn btn-xs sm:btn-sm btn-neo-secondary rounded-xl font-bold gap-1 text-xs flex-1 sm:flex-initial"
           >
             <RotateCcw className="w-3.5 h-3.5" /> New Session
           </button>
@@ -68,12 +68,12 @@ export default function Result({
       </div>
 
       {/* Main 2-Column Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         
         {/* Left Column: Big Center Photo Strip Preview */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-center space-y-6">
+        <div className="lg:col-span-6 flex flex-col items-center justify-center space-y-4 sm:space-y-6">
           
-          <div className="w-full flex justify-center p-4 sm:p-8 bg-base-200/50 rounded-3xl border-2 border-base-content/15 shadow-inner">
+          <div className="w-full flex justify-center p-3 xs:p-5 sm:p-8 bg-base-200/50 rounded-3xl border-2 border-base-content/15 shadow-inner">
             <PhotoStrip
               ref={photoStripRef}
               photos={capturedPhotos}
@@ -87,13 +87,13 @@ export default function Result({
             />
           </div>
 
-          <p className="text-[11px] font-mono font-medium text-base-content/50 text-center">
+          <p className="text-[10px] sm:text-[11px] font-mono font-medium text-base-content/50 text-center">
             Tip: Export uses high-DPI rendering (2.5x) for clean, crisp prints.
           </p>
         </div>
 
         {/* Right Column: Editor & Download Actions */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-4 sm:space-y-6">
           
           {/* Tabbed Photo Customizer */}
           <PhotoEditor
@@ -114,7 +114,7 @@ export default function Result({
           />
 
           {/* Download & Share Actions Card */}
-          <div className="card-neo p-6 bg-base-100 space-y-4">
+          <div className="card-neo p-4 sm:p-6 bg-base-100 space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold uppercase tracking-wider text-base-content/70 flex items-center gap-1.5">
                 <Download className="w-4 h-4 text-primary" />

@@ -13,12 +13,12 @@ export default function PhotoThumbnails({
     <div className="w-full space-y-4">
       
       {/* Progress Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <span className="badge badge-sm badge-secondary font-bold uppercase text-[10px] tracking-wider border-base-content/20">
+          <span className="badge badge-xs sm:badge-sm badge-secondary font-bold uppercase text-[9px] sm:text-[10px] tracking-wider border-base-content/20 shrink-0">
             Progress
           </span>
-          <span className="font-mono text-xs sm:text-sm font-extrabold text-base-content tracking-wider">
+          <span className="font-mono text-[11px] sm:text-xs md:text-sm font-extrabold text-base-content tracking-wider truncate">
             {photos.length === totalShots ? (
               <span className="text-success flex items-center gap-1 font-bold">
                 <Check className="w-3.5 h-3.5" /> ALL {totalShots} SHOTS READY!
@@ -26,7 +26,7 @@ export default function PhotoThumbnails({
             ) : isCapturing ? (
               `TAKING PHOTO ${photos.length + 1} OF ${totalShots}`
             ) : (
-              `${photos.length} OF ${totalShots} PHOTOS CAPTURED`
+              `${photos.length} OF ${totalShots} SHOTS`
             )}
           </span>
         </div>
@@ -34,16 +34,16 @@ export default function PhotoThumbnails({
         {photos.length > 0 && !isCapturing && (
           <button
             onClick={onClearAll}
-            className="btn btn-ghost btn-xs text-error font-bold flex items-center gap-1 hover:bg-error/10 rounded-lg"
+            className="btn btn-ghost btn-xs text-error font-bold flex items-center gap-1 hover:bg-error/10 rounded-lg text-[11px]"
             title="Clear all photos and restart"
           >
-            <RotateCcw className="w-3 h-3" /> Reset All
+            <RotateCcw className="w-3 h-3" /> Reset
           </button>
         )}
       </div>
 
       {/* Dot Indicators */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         {Array.from({ length: totalShots }).map((_, index) => {
           const isDone = index < photos.length;
           const isCurrent = index === photos.length && isCapturing;
@@ -51,12 +51,12 @@ export default function PhotoThumbnails({
           return (
             <div
               key={index}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
+              className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${
                 isDone
-                  ? 'w-8 bg-primary shadow-neo-sm'
+                  ? 'w-6 sm:w-8 bg-primary shadow-neo-sm'
                   : isCurrent
-                  ? 'w-8 bg-secondary animate-pulse'
-                  : 'w-4 bg-base-300'
+                  ? 'w-6 sm:w-8 bg-secondary animate-pulse'
+                  : 'w-3 sm:w-4 bg-base-300'
               }`}
             />
           );
@@ -64,7 +64,7 @@ export default function PhotoThumbnails({
       </div>
 
       {/* Thumbnails Grid */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
         {Array.from({ length: totalShots }).map((_, idx) => {
           const photoUrl = photos[idx];
           const isSlotActive = idx === photos.length && isCapturing;

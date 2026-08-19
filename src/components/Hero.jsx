@@ -29,69 +29,69 @@ export default function Hero({ onStartPhotobooth, onSelectTemplate }) {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-base-content font-display leading-[1.08]">
-              Capture the moment. <br />
+            <h1 className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-base-content font-display leading-[1.1] break-words">
+              Capture the moment. <br className="hidden xs:block" />
               <span className="text-primary underline decoration-secondary decoration-wavy decoration-4">
                 Make it yours.
               </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg sm:text-xl text-base-content/75 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+            <p className="text-base sm:text-xl text-base-content/75 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
               A playful digital photobooth for your best moments. Snap multi-shots, pick aesthetic templates, customize with vintage filters, and save high-res photo strips in seconds.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2 w-full">
               <button
                 onClick={onStartPhotobooth}
-                className="btn btn-lg btn-neo-primary rounded-2xl w-full sm:w-auto px-8 gap-3 text-base font-bold group"
+                className="btn btn-md sm:btn-lg btn-neo-primary rounded-2xl w-full sm:w-auto px-6 sm:px-8 gap-2 sm:gap-3 text-sm sm:text-base font-bold group"
                 id="hero-start-btn"
               >
-                <Camera className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <Camera className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform shrink-0" />
                 <span>Start Photobooth</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform shrink-0" />
               </button>
 
               <a
                 href="#templates-section"
-                className="btn btn-lg btn-neo-ghost rounded-2xl w-full sm:w-auto px-6 gap-2 text-base font-bold"
+                className="btn btn-md sm:btn-lg btn-neo-ghost rounded-2xl w-full sm:w-auto px-5 sm:px-6 gap-2 text-sm sm:text-base font-bold"
               >
                 <span>View Templates</span>
               </a>
             </div>
 
             {/* Feature Highlights Trust Badges */}
-            <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-6 text-xs sm:text-sm font-semibold text-base-content/70">
+            <div className="pt-3 sm:pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-4 sm:gap-x-6 text-xs sm:text-sm font-semibold text-base-content/70">
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-success" />
-                <span>Live Camera Multi-Shot</span>
+                <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-success shrink-0" />
+                <span>Live Multi-Shot</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-success" />
-                <span>Aesthetic Retro Filters</span>
+                <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-success shrink-0" />
+                <span>Retro Filters</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-success" />
-                <span>High-Res PNG Download</span>
+                <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-success shrink-0" />
+                <span>HD PNG Export</span>
               </div>
             </div>
 
           </div>
 
           {/* Right Column: Hero Photo Strip Mockup */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative group cursor-pointer" onClick={onStartPhotobooth}>
+          <div className="lg:col-span-5 flex justify-center px-2 sm:px-0">
+            <div className="relative group cursor-pointer max-w-full" onClick={onStartPhotobooth}>
               
               {/* Floating Sticker 1 */}
-              <div className="absolute -top-4 -left-6 z-20 bg-secondary text-secondary-content px-3 py-1.5 rounded-2xl border-2 border-base-content shadow-neo font-display font-extrabold text-xs rotate-[-8deg] animate-float flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 fill-current" />
+              <div className="absolute -top-3 -left-2 sm:-left-6 z-20 bg-secondary text-secondary-content px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl sm:rounded-2xl border-2 border-base-content shadow-neo font-display font-extrabold text-[11px] sm:text-xs rotate-[-8deg] animate-float flex items-center gap-1">
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
                 <span>BEST MEMORIES</span>
               </div>
 
               {/* Floating Sticker 2 */}
-              <div className="absolute -bottom-3 -right-6 z-20 bg-primary text-white px-3 py-1.5 rounded-2xl border-2 border-base-content shadow-neo font-handwriting text-base rotate-[6deg] flex items-center gap-1">
-                <Heart className="w-4 h-4 fill-current" />
+              <div className="absolute -bottom-3 -right-2 sm:-right-6 z-20 bg-primary text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl sm:rounded-2xl border-2 border-base-content shadow-neo font-handwriting text-sm sm:text-base rotate-[6deg] flex items-center gap-1">
+                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                 <span>august 2026 ♡</span>
               </div>
 
@@ -99,21 +99,21 @@ export default function Hero({ onStartPhotobooth, onSelectTemplate }) {
               <div className="absolute inset-0 bg-base-content/10 rounded-3xl transform rotate-3 scale-95 -z-10 translate-y-2" />
 
               {/* The Mockup Strip Card */}
-              <div className="w-[260px] sm:w-[290px] bg-base-100 p-4 sm:p-5 rounded-3xl border-3 border-base-content shadow-neo-xl transition-all duration-300 group-hover:rotate-1 group-hover:scale-[1.02]">
+              <div className="w-[240px] xs:w-[260px] sm:w-[290px] max-w-[85vw] bg-base-100 p-3.5 sm:p-5 rounded-3xl border-3 border-base-content shadow-neo-xl transition-all duration-300 group-hover:rotate-1 group-hover:scale-[1.02]">
                 
                 {/* Strip Top Header */}
                 <div className="text-center pb-2 border-b border-base-content/15 mb-2.5">
-                  <div className="flex items-center justify-center gap-1 text-[11px] font-extrabold tracking-widest uppercase text-base-content">
+                  <div className="flex items-center justify-center gap-1 text-[10px] sm:text-[11px] font-extrabold tracking-widest uppercase text-base-content">
                     <Camera className="w-3 h-3 text-primary" />
                     <span>PHOTOMOMENT STUDIO</span>
                   </div>
-                  <div className="text-[9px] font-mono font-medium text-base-content/60">
+                  <div className="text-[8px] sm:text-[9px] font-mono font-medium text-base-content/60">
                     REC ● 00:26:08
                   </div>
                 </div>
 
                 {/* 4 Photo Boxes */}
-                <div className="space-y-2.5">
+                <div className="space-y-2 sm:space-y-2.5">
                   {samplePhotos.map((photo, i) => (
                     <div
                       key={i}
@@ -124,7 +124,7 @@ export default function Hero({ onStartPhotobooth, onSelectTemplate }) {
                         alt={`Sample photo ${i + 1}`}
                         className="w-full h-full object-cover filter-warm"
                       />
-                      <div className="absolute bottom-1 right-1.5 px-1.5 py-0.5 rounded-md bg-black/40 text-[9px] font-mono text-white backdrop-blur-xs">
+                      <div className="absolute bottom-1 right-1.5 px-1.5 py-0.5 rounded-md bg-black/40 text-[8px] sm:text-[9px] font-mono text-white backdrop-blur-xs">
                         0{i + 1}
                       </div>
                     </div>
@@ -132,11 +132,11 @@ export default function Hero({ onStartPhotobooth, onSelectTemplate }) {
                 </div>
 
                 {/* Strip Bottom Footer */}
-                <div className="pt-3 text-center">
-                  <p className="font-handwriting text-lg text-primary font-bold">
+                <div className="pt-2.5 sm:pt-3 text-center">
+                  <p className="font-handwriting text-base sm:text-lg text-primary font-bold">
                     Our little moment ♡
                   </p>
-                  <p className="text-[10px] font-mono font-bold tracking-wider text-base-content/60">
+                  <p className="text-[9px] sm:text-[10px] font-mono font-bold tracking-wider text-base-content/60">
                     19 AUG 2026 • PHOTOBOOTH
                   </p>
                 </div>

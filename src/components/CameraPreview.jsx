@@ -18,7 +18,7 @@ export default function CameraPreview({
   filterClass = 'filter-original',
 }) {
   return (
-    <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] bg-neutral-900 rounded-3xl overflow-hidden border-3 border-base-content shadow-neo-lg flex items-center justify-center select-none">
+    <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] max-h-[60vh] sm:max-h-none bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden border-3 border-base-content shadow-neo-lg flex items-center justify-center select-none">
       
       {/* 1. Live Video Stream */}
       <video
@@ -44,14 +44,14 @@ export default function CameraPreview({
             className="animate-countdown flex flex-col items-center justify-center"
           >
             {countdown > 0 ? (
-              <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-primary text-white flex items-center justify-center border-4 border-white shadow-neo-xl">
-                <span className="font-display font-extrabold text-7xl sm:text-8xl tracking-tight">
+              <div className="w-24 h-24 sm:w-36 sm:h-36 rounded-full bg-primary text-white flex items-center justify-center border-4 border-white shadow-neo-xl">
+                <span className="font-display font-extrabold text-5xl sm:text-8xl tracking-tight">
                   {countdown}
                 </span>
               </div>
             ) : (
-              <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-secondary text-secondary-content flex items-center justify-center border-4 border-base-content shadow-neo-xl">
-                <Camera className="w-16 h-16 sm:w-20 sm:h-20 animate-bounce" strokeWidth={2.5} />
+              <div className="w-24 h-24 sm:w-36 sm:h-36 rounded-full bg-secondary text-secondary-content flex items-center justify-center border-4 border-base-content shadow-neo-xl">
+                <Camera className="w-12 h-12 sm:w-18 sm:h-18 animate-bounce" strokeWidth={2.5} />
               </div>
             )}
           </div>
@@ -109,28 +109,28 @@ export default function CameraPreview({
 
       {/* 5. Floating Corner Controls (Mirror, Flip, Switch Device) */}
       {cameraStatus === 'ready' && !isCapturing && (
-        <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 flex items-center gap-1.5 sm:gap-2">
           
           {/* Mirror Toggle */}
           <button
             onClick={onToggleMirror}
-            className={`btn btn-circle btn-sm backdrop-blur-md border-2 border-white/20 text-white ${
+            className={`btn btn-circle btn-xs sm:btn-sm backdrop-blur-md border-2 border-white/20 text-white ${
               isMirrored ? 'bg-primary/80 hover:bg-primary' : 'bg-black/60 hover:bg-black/80'
             }`}
             title={isMirrored ? 'Disable Mirror' : 'Enable Mirror'}
             aria-label="Toggle Mirror"
           >
-            <FlipHorizontal className="w-4 h-4" />
+            <FlipHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
 
           {/* Flip Front/Rear Camera (for mobile/tablet) */}
           <button
             onClick={onToggleFacing}
-            className="btn btn-circle btn-sm bg-black/60 hover:bg-black/80 backdrop-blur-md border-2 border-white/20 text-white"
+            className="btn btn-circle btn-xs sm:btn-sm bg-black/60 hover:bg-black/80 backdrop-blur-md border-2 border-white/20 text-white"
             title="Flip Camera"
             aria-label="Flip Camera"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
 
           {/* Multi-Device Dropdown (if more than 1 webcam available) */}
@@ -138,14 +138,14 @@ export default function CameraPreview({
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
-                className="btn btn-circle btn-sm bg-black/60 hover:bg-black/80 backdrop-blur-md border-2 border-white/20 text-white"
+                className="btn btn-circle btn-xs sm:btn-sm bg-black/60 hover:bg-black/80 backdrop-blur-md border-2 border-white/20 text-white"
                 title="Select Camera Device"
               >
-                <Settings2 className="w-4 h-4" />
+                <Settings2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content z-50 menu p-2 shadow-neo-lg bg-base-100 rounded-2xl w-60 border-2 border-base-content/20 text-base-content mt-2"
+                className="dropdown-content z-50 menu p-2 shadow-neo-lg bg-base-100 rounded-2xl w-52 sm:w-60 border-2 border-base-content/20 text-base-content mt-2 max-w-[calc(100vw-2rem)]"
               >
                 <li className="menu-title text-xs uppercase font-extrabold px-3 py-1">
                   Select Video Input
@@ -171,8 +171,8 @@ export default function CameraPreview({
 
       {/* Live Recording Badge */}
       {cameraStatus === 'ready' && (
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[11px] font-mono font-bold text-white">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-mono font-bold text-white">
+          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-red-500 animate-ping" />
           <span>LIVE CAM</span>
         </div>
       )}

@@ -3,12 +3,12 @@ import { Camera, Heart, Sparkles, ShieldCheck, Zap } from 'lucide-react';
 
 export default function Footer({ onStartPhotobooth }) {
   return (
-    <footer className="border-t-2 border-base-content/10 bg-base-200/50 mt-20 pt-12 pb-8">
+    <footer className="border-t-2 border-base-content/10 bg-base-200/50 mt-12 sm:mt-20 pt-8 sm:pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
           
           {/* Brand Col */}
-          <div className="md:col-span-2 space-y-4">
+          <div className="sm:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-primary text-primary-content flex items-center justify-center border-2 border-base-content shadow-neo-sm">
                 <Camera className="w-4 h-4" strokeWidth={2.5} />

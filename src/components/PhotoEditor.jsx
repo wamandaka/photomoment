@@ -34,13 +34,13 @@ export default function PhotoEditor({
   const [activeTab, setActiveTab] = useState('filters');
 
   return (
-    <div className="card-neo p-5 sm:p-6 bg-base-100 space-y-6">
+    <div className="card-neo p-4 sm:p-6 bg-base-100 space-y-5 sm:space-y-6">
       
       {/* Tab Navigation */}
-      <div className="flex items-center justify-between border-b-2 border-base-content/10 pb-3 gap-1 overflow-x-auto">
+      <div className="flex items-center justify-between border-b-2 border-base-content/10 pb-2.5 gap-1 overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveTab('filters')}
-          className={`btn btn-sm rounded-xl font-bold gap-1.5 flex-1 ${
+          className={`btn btn-xs sm:btn-sm rounded-xl font-bold gap-1 sm:gap-1.5 flex-1 px-1.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap ${
             activeTab === 'filters'
               ? 'btn-primary shadow-neo-sm'
               : 'btn-ghost text-base-content/70 hover:bg-base-200'
@@ -52,7 +52,7 @@ export default function PhotoEditor({
 
         <button
           onClick={() => setActiveTab('frames')}
-          className={`btn btn-sm rounded-xl font-bold gap-1.5 flex-1 ${
+          className={`btn btn-xs sm:btn-sm rounded-xl font-bold gap-1 sm:gap-1.5 flex-1 px-1.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap ${
             activeTab === 'frames'
               ? 'btn-primary shadow-neo-sm'
               : 'btn-ghost text-base-content/70 hover:bg-base-200'
@@ -64,7 +64,7 @@ export default function PhotoEditor({
 
         <button
           onClick={() => setActiveTab('text')}
-          className={`btn btn-sm rounded-xl font-bold gap-1.5 flex-1 ${
+          className={`btn btn-xs sm:btn-sm rounded-xl font-bold gap-1 sm:gap-1.5 flex-1 px-1.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap ${
             activeTab === 'text'
               ? 'btn-primary shadow-neo-sm'
               : 'btn-ghost text-base-content/70 hover:bg-base-200'
@@ -76,7 +76,7 @@ export default function PhotoEditor({
 
         <button
           onClick={() => setActiveTab('stickers')}
-          className={`btn btn-sm rounded-xl font-bold gap-1.5 flex-1 ${
+          className={`btn btn-xs sm:btn-sm rounded-xl font-bold gap-1 sm:gap-1.5 flex-1 px-1.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap ${
             activeTab === 'stickers'
               ? 'btn-primary shadow-neo-sm'
               : 'btn-ghost text-base-content/70 hover:bg-base-200'

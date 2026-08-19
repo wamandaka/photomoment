@@ -27,7 +27,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         backgroundColor: currentFrame.hex,
         color: currentFrame.textHex,
       }}
-      className={`photo-strip-container w-[280px] sm:w-[320px] mx-auto p-4 sm:p-5 rounded-3xl border-3 border-black shadow-neo-xl transition-all duration-300 relative select-none ${
+      className={`photo-strip-container w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px] mx-auto p-3.5 sm:p-5 rounded-3xl border-3 border-black shadow-neo-xl transition-all duration-300 relative select-none ${
         templateId === 'retro' ? 'font-mono' : ''
       }`}
     >
@@ -185,19 +185,19 @@ const PhotoStrip = forwardRef(function PhotoStrip(
       )}
 
       {/* 6. BOTTOM CAPTION & DATE FOOTER */}
-      <div className="pt-3.5 text-center space-y-1">
+      <div className="pt-3 text-center space-y-1">
         {caption && (
           <p
-            className={`font-bold leading-tight ${
+            className={`font-bold leading-tight break-words px-1 ${
               templateId === 'polaroid'
-                ? 'font-handwriting text-xl sm:text-2xl text-base-content'
+                ? 'font-handwriting text-lg sm:text-2xl text-base-content'
                 : templateId === 'cute'
-                ? 'font-display text-sm text-pink-600 font-extrabold'
+                ? 'font-display text-xs sm:text-sm text-pink-600 font-extrabold'
                 : templateId === 'retro'
-                ? 'font-mono text-xs text-orange-400 font-extrabold uppercase'
+                ? 'font-mono text-[11px] sm:text-xs text-orange-400 font-extrabold uppercase'
                 : templateId === 'minimal'
-                ? 'font-mono text-xs uppercase tracking-widest'
-                : 'font-handwriting text-lg sm:text-xl text-primary font-extrabold'
+                ? 'font-mono text-[10px] sm:text-xs uppercase tracking-widest'
+                : 'font-handwriting text-base sm:text-xl text-primary font-extrabold'
             }`}
           >
             {caption}

@@ -39,7 +39,7 @@ export default function TemplatesPreview({ onSelectTemplate }) {
         </div>
 
         {/* Templates Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {TEMPLATES.map((tmpl) => {
             const IconComponent = ICON_MAP[tmpl.iconName] || Sparkles;
 
@@ -47,7 +47,7 @@ export default function TemplatesPreview({ onSelectTemplate }) {
               <div
                 key={tmpl.id}
                 onClick={() => onSelectTemplate(tmpl.id)}
-                className="card-neo-hover p-6 rounded-3xl cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-base-100"
+                className="card-neo-hover p-4 sm:p-6 rounded-3xl cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-base-100"
               >
                 {/* Top Badge & Category */}
                 <div className="flex items-center justify-between mb-4">

@@ -65,13 +65,13 @@ export default function Features() {
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {FEATURES.map((feat, index) => {
             const Icon = feat.icon;
             return (
               <div
                 key={index}
-                className="card-neo-hover p-6 rounded-3xl space-y-4 bg-base-100 flex flex-col justify-between"
+                className="card-neo-hover p-5 sm:p-6 rounded-3xl space-y-4 bg-base-100 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">

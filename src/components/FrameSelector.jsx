@@ -15,7 +15,7 @@ export default function FrameSelector({ selectedFrame, onSelectFrame }) {
         </span>
       </div>
 
-      <div className="grid grid-cols-3 sm:grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 xs:grid-cols-3 gap-2">
         {FRAME_COLORS.map((frame) => {
           const isSelected = frame.id === selectedFrame;
 
@@ -23,7 +23,7 @@ export default function FrameSelector({ selectedFrame, onSelectFrame }) {
             <button
               key={frame.id}
               onClick={() => onSelectFrame(frame.id)}
-              className={`p-2.5 rounded-2xl border-2 text-left transition-all duration-150 flex items-center gap-2.5 ${
+              className={`p-2 sm:p-2.5 rounded-2xl border-2 text-left transition-all duration-150 flex items-center gap-2 sm:gap-2.5 ${
                 isSelected
                   ? 'border-primary bg-primary/10 shadow-neo-sm ring-2 ring-primary/30'
                   : 'border-base-content/15 bg-base-100 hover:border-base-content/40 hover:bg-base-200/50'
@@ -34,18 +34,18 @@ export default function FrameSelector({ selectedFrame, onSelectFrame }) {
                   backgroundColor: frame.hex,
                   borderColor: frame.borderHex || '#000000',
                 }}
-                className="w-7 h-7 rounded-xl border-2 shadow-xs shrink-0 flex items-center justify-center"
+                className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl border-2 shadow-xs shrink-0 flex items-center justify-center"
               >
                 {isSelected && (
                   <Check
-                    className="w-3.5 h-3.5"
+                    className="w-3 h-3 sm:w-3.5 sm:h-3.5"
                     style={{ color: frame.textHex }}
                     strokeWidth={3}
                   />
                 )}
               </div>
 
-              <span className="text-xs font-bold text-base-content truncate">
+              <span className="text-[11px] sm:text-xs font-bold text-base-content truncate">
                 {frame.name}
               </span>
             </button>
