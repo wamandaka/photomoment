@@ -233,7 +233,7 @@ export default function PhotoEditor({
               onChange={(e) => onCaptionChange(e.target.value)}
               placeholder="Our little moment ♡"
               maxLength={40}
-              className="input input-sm sm:input-md input-bordered w-full rounded-2xl border-2 border-base-content/20 font-medium text-sm focus:border-primary"
+              className="input input-sm sm:input-md input-bordered w-full rounded-2xl border-2 font-medium text-sm focus:border-primary"
             />
           </div>
 
@@ -257,7 +257,7 @@ export default function PhotoEditor({
                 onChange={(e) => onDateTextChange(e.target.value)}
                 placeholder="19 AUG 2026"
                 maxLength={20}
-                className="input input-sm input-bordered w-full rounded-xl border-2 border-base-content/20 font-mono text-xs focus:border-primary"
+                className="input input-sm input-bordered w-full rounded-xl border-2 font-mono text-xs focus:border-primary"
               />
             )}
           </div>
@@ -421,7 +421,7 @@ export default function PhotoEditor({
                     onChange={(e) => setCustomText(e.target.value)}
                     placeholder="Contoh: BESTIE FOREVER ♡"
                     maxLength={30}
-                    className="input input-sm input-bordered flex-1 rounded-xl border-2 border-base-content/20 font-bold text-xs focus:border-primary"
+                    className="input input-sm input-bordered flex-1 rounded-xl border-2 font-bold text-xs focus:border-primary"
                   />
                   <button
                     type="submit"
