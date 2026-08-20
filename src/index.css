@@ -92,8 +92,8 @@
 
 /* Print / Canvas capture safety */
 .photo-strip-container {
-  transform: translateZ(0);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* Scrollbar polish */

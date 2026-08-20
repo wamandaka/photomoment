@@ -29,23 +29,45 @@ export function getExportFilename() {
 }
 
 /**
+ * Build reliable, crisp export options for html-to-image
+ * Solves cut-off edges, margin-shift bugs on mobile / desktop, and ensures pixel-perfect output.
+ */
+function getExportOptions(elementNode, customPixelRatio = 2.5) {
+  if (!elementNode) return {};
+
+  const rect = elementNode.getBoundingClientRect();
+  const width = Math.ceil(elementNode.offsetWidth || rect.width);
+  const height = Math.ceil(elementNode.offsetHeight || rect.height);
+
+  return {
+    quality: 0.98,
+    pixelRatio: customPixelRatio,
+    cacheBust: true,
+    skipAutoScale: true,
+    width,
+    height,
+    style: {
+      transform: 'none',
+      margin: '0',
+      left: '0',
+      top: '0',
+      right: 'auto',
+      bottom: 'auto',
+      maxWidth: 'none',
+      maxHeight: 'none',
+      width: `${width}px`,
+      height: `${height}px`,
+    },
+  };
+}
+
+/**
  * Export a DOM node to high resolution PNG and trigger browser download
  */
 export async function downloadPhotoStrip(elementNode, customName = null) {
   if (!elementNode) throw new Error('Target element not found');
 
-  // Options for crisp rendering
-  const options = {
-    quality: 0.98,
-    pixelRatio: 2.5, // 2.5x high DPI export
-    cacheBust: true,
-    skipAutoScale: true,
-    style: {
-      transform: 'none',
-      margin: '0',
-    },
-  };
-
+  const options = getExportOptions(elementNode, 2.5);
   const dataUrl = await toPng(elementNode, options);
   const filename = customName || getExportFilename();
 
@@ -69,12 +91,7 @@ export async function copyPhotoStripToClipboard(elementNode) {
     throw new Error('Clipboard API is not supported in this browser.');
   }
 
-  const options = {
-    quality: 0.98,
-    pixelRatio: 2,
-    cacheBust: true,
-  };
-
+  const options = getExportOptions(elementNode, 2.5);
   const blob = await toBlob(elementNode, options);
   if (!blob) throw new Error('Failed to generate image blob');
 
@@ -91,7 +108,8 @@ export async function sharePhotoStrip(elementNode, title = 'Our Photobooth Memor
     throw new Error('Web Share API is not supported on this device.');
   }
 
-  const blob = await toBlob(elementNode, { quality: 0.95, pixelRatio: 2 });
+  const options = getExportOptions(elementNode, 2.5);
+  const blob = await toBlob(elementNode, options);
   if (!blob) throw new Error('Failed to generate image blob');
 
   const file = new File([blob], getExportFilename(), { type: 'image/png' });

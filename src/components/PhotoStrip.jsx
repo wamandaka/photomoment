@@ -68,8 +68,8 @@ const PhotoStrip = forwardRef(function PhotoStrip(
     <div
       ref={ref}
       id="export-photo-strip"
-      className={`photo-strip-container w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px] mx-auto relative select-none ${
-        hasTopOrnament ? 'pt-5 sm:pt-6' : ''
+      className={`photo-strip-container w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px] mx-auto relative select-none px-2 pb-3 ${
+        hasTopOrnament ? 'pt-5 sm:pt-6' : 'pt-2'
       }`}
     >
       {/* SVG ClipPath Definition for Heart Frames (renders inside html-to-image canvas) */}
