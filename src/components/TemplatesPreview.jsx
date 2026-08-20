@@ -1,6 +1,6 @@
 import React from 'react';
 import { TEMPLATES } from '../data/templates';
-import { Sparkles, ArrowRight, LayoutList, Image, Film, Square, LayoutGrid } from 'lucide-react';
+import { Sparkles, ArrowRight, LayoutList, Image, Film, Square, LayoutGrid, Newspaper } from 'lucide-react';
 import { getSamplePhotos } from '../utils/photoProcessor';
 
 const ICON_MAP = {
@@ -10,6 +10,7 @@ const ICON_MAP = {
   Square,
   Sparkles,
   LayoutGrid,
+  Newspaper,
 };
 
 export default function TemplatesPreview({ onSelectTemplate }) {
@@ -71,6 +72,42 @@ export default function TemplatesPreview({ onSelectTemplate }) {
                 <div className="my-3 py-4 px-6 bg-base-200/70 rounded-2xl border-2 border-base-content/10 flex items-center justify-center min-h-[220px] group-hover:border-primary/40 transition-colors">
                   
                   {/* Visual representation depending on template */}
+                  {tmpl.id === 'newspaper' && (
+                    <div className="w-28 bg-[#F5F2EB] p-2 rounded-xs border-2 border-black/80 shadow-neo-sm space-y-1 font-serif text-black select-none">
+                      <div className="border-t border-b border-black text-[5px] flex justify-between font-bold uppercase py-0.2">
+                        <span>EDISI KHUSUS</span>
+                        <span className="bg-[#FFE01B] text-black px-0.5 font-sans font-black">NEWS+</span>
+                        <span>EDISI KHUSUS</span>
+                      </div>
+                      <div className="text-center">
+                        <span className="text-[#C5221F] font-black text-[8.5px] tracking-tight">FOTO </span>
+                        <span className="text-[#0E2A47] font-black text-[8.5px] tracking-tight">KITA BLUR</span>
+                        <div className="font-script text-[#0E3B64] text-[6.5px] -mt-1 italic">Tak Banyak Yang Kulihat</div>
+                      </div>
+                      <div className="relative aspect-[4/3] bg-white border border-black/80 overflow-hidden">
+                        <img src={samplePhotos[0]} alt="sample" className="w-full h-full object-cover filter-vintage" />
+                        <span className="absolute -bottom-1 -left-0.5 text-[10px]">🫐</span>
+                        <span className="absolute -bottom-1 -right-0.5 text-[10px]">🥐</span>
+                      </div>
+                      <div className="border border-black text-[4.5px] text-center font-bold bg-white/60 py-0.2">
+                        <span className="text-[#1E3A8A]">KAMU BLUBERRY</span> & <span className="text-[#D97706]">AKU PASTRY</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-1 items-start">
+                        <div className="aspect-square bg-white border border-black/80 overflow-hidden">
+                          <img src={samplePhotos[1]} alt="sample" className="w-full h-full object-cover filter-vintage" />
+                        </div>
+                        <div className="text-[3.5px] leading-[1.1] border border-black/40 p-0.5 bg-white space-y-0.5 font-sans">
+                          <div className="bg-blue-600 text-white px-0.5 font-bold flex justify-between text-[3.5px]">
+                            <span>NOW PLAYING:</span>
+                            <span>▶</span>
+                          </div>
+                          <div className="font-black truncate text-[4px]">SAL PRIADI</div>
+                          <div className="text-[3px] text-stone-600 line-clamp-2">Lagu Foto Kita Blur kenangan terbaik...</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {tmpl.id === 'wedding-love' && (
                     <div className="relative pt-3">
                       <div className="absolute top-0 left-1/2 -translate-x-1/2 px-2 py-0.2 bg-gradient-to-r from-amber-300 to-yellow-200 border border-amber-600 rounded-full text-[6px] text-amber-950 font-serif font-black flex items-center gap-0.5 shadow-xs whitespace-nowrap">

@@ -5,6 +5,7 @@ export const FRAME_COLORS = [
   { id: "wedding-noir", name: "🎩 Black Tie Gold (Love)", hex: "#191417", textHex: "#F3E5AB", borderHex: "#D4AF37", hasWeddingRings: true, hasHeartShape: true, strokeColor: "#F3E5AB" },
 
   // Conceptual Frames
+  { id: "newspaper-paper", name: "📰 Broadsheet News", hex: "#F5F2EB", textHex: "#18181B", borderHex: "#404040", hasNewspaperHeader: true },
   { id: "evidence-folder", name: "🕵️ Case Manila", hex: "#F4E8C1", textHex: "#4A1515", borderHex: "#B89758", hasEvidencePin: true },
   { id: "receipt-paper", name: "🧾 Thermal Struk", hex: "#FDFDFD", textHex: "#111111", borderHex: "#D1D5DB", hasReceiptEdge: true },
   { id: "cyber-card", name: "🎮 Cyber Neon", hex: "#0B0F19", textHex: "#38BDF8", borderHex: "#3B82F6", hasHoloBorder: true },

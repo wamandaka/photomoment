@@ -14,6 +14,8 @@ export default {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
         display: ['Cabinet Grotesk', 'Plus Jakarta Sans', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        script: ['Dancing Script', 'Caveat', 'cursive'],
         mono: ['JetBrains Mono', 'monospace'],
         handwriting: ['Caveat', 'cursive'],
         retro: ['VT323', 'monospace'],

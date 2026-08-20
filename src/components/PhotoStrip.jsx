@@ -243,7 +243,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         className={`w-full p-3.5 sm:p-5 rounded-3xl border-3 border-black shadow-neo-xl transition-all duration-300 relative ${
           hasTopOrnament ? '-mt-2.5 sm:-mt-3' : ''
         } ${
-          templateId === 'wedding-love'
+          templateId === 'wedding-love' || templateId === 'newspaper'
             ? 'font-serif'
             : templateId === 'retro' || templateId === 'disposable' || templateId === 'receipt' || templateId === 'brain-exe'
             ? 'font-mono'
@@ -305,7 +305,48 @@ const PhotoStrip = forwardRef(function PhotoStrip(
 
       {/* 3. HEADERS */}
 
-      {/* 3A. WEDDING LOVE */}
+      {/* 3A. NEWSPAPER / DAILY GAZETTE */}
+      {templateId === 'newspaper' && (
+        <div className="space-y-1 pb-1.5 mb-2 select-none">
+          {/* Top Special Edition Bar with double borders */}
+          <div className="pt-0.5 pb-1 border-t-2 border-b-2 border-black/80 flex items-center justify-between text-[7px] sm:text-[8px] font-serif font-black tracking-widest text-black uppercase">
+            <div className="flex items-center gap-1">
+              <span className="opacity-90">SPECIAL EDITION</span>
+              <span className="text-[8px]">⊛</span>
+            </div>
+
+            {/* Center Masthead Logo Badge */}
+            <div className="bg-[#FFE01B] border-2 border-black px-1.5 py-0.2 rounded-xs shadow-neo-sm transform -rotate-1 flex flex-col items-center justify-center">
+              <div className="text-[10px] sm:text-[11px] font-black text-black tracking-tighter leading-none flex items-center gap-0.5 font-display">
+                <span>NEWS</span>
+                <span className="text-[#C5221F] font-extrabold text-xs">+</span>
+              </div>
+              <div className="text-[5px] sm:text-[5.5px] bg-black text-[#FFE01B] font-extrabold px-1 tracking-widest uppercase rounded-2xs mt-0.5">
+                PHOTOBOOTH
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <span className="text-[8px]">⊛</span>
+              <span className="opacity-90">SPECIAL EDITION</span>
+            </div>
+          </div>
+
+          {/* Giant Bold Headline "FOTO KITA BLUR" */}
+          <div className="text-center pt-0.5 relative">
+            <div className="text-2xl sm:text-3xl font-serif font-black tracking-tight uppercase leading-none select-none flex items-center justify-center gap-1.5">
+              <span className="text-[#C5221F] drop-shadow-2xs">FOTO</span>
+              <span className="text-[#0E2A47] drop-shadow-2xs">KITA BLUR</span>
+            </div>
+            {/* Overlaid Cursive Subtitle Script */}
+            <div className="font-script text-[#0E3B64] italic text-sm sm:text-base font-bold tracking-wide -mt-1.5 sm:-mt-2 text-center drop-shadow-xs">
+              Tak Banyak Yang Kulihat
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 3B. WEDDING LOVE */}
       {templateId === 'wedding-love' && (
         <div className="text-center pb-2 border-b-2 border-amber-500/30 mb-2.5 pt-0.5 font-serif space-y-0.5">
           <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-black tracking-widest text-red-950 uppercase">
@@ -609,17 +650,119 @@ const PhotoStrip = forwardRef(function PhotoStrip(
       )}
 
       {/* 4. PHOTOS SECTION */}
-      <div
-        className={`w-full ${
-          templateId === 'grid'
-            ? 'grid grid-cols-2 gap-2.5'
-            : isHeartShape
-            ? 'space-y-3 sm:space-y-3.5'
-            : templateId === 'retro' || templateId === 'disposable'
-            ? 'px-2 sm:px-3 space-y-2.5'
-            : 'space-y-2.5 sm:space-y-3'
-        }`}
-      >
+      {templateId === 'newspaper' ? (
+        <div className="w-full space-y-2 select-none">
+          {/* 1. HERO PRIMARY PHOTO (Slot 1) */}
+          <div className="relative">
+            <div className="relative overflow-hidden border-2 border-black/90 bg-white p-1 rounded-none shadow-sm aspect-[4/3]">
+              {photos[0] ? (
+                <img
+                  src={photos[0]}
+                  alt="Hero Photo"
+                  className={`w-full h-full object-cover ${filterClass}`}
+                  crossOrigin="anonymous"
+                />
+              ) : (
+                <div className="w-full h-full bg-stone-100 flex flex-col items-center justify-center text-xs opacity-50">
+                  <Camera className="w-7 h-7 mb-1 text-black/60" />
+                  <span className="font-serif text-[11px] font-bold text-stone-700">Foto Utama 01</span>
+                </div>
+              )}
+            </div>
+
+            {/* Corner Fruit & Bakery Decorations */}
+            <div className="absolute -bottom-2 -left-2 text-2xl sm:text-3xl filter drop-shadow-md select-none pointer-events-none transform -rotate-12 z-10">
+              🫐
+            </div>
+            <div className="absolute -bottom-2 -right-2 text-2xl sm:text-3xl filter drop-shadow-md select-none pointer-events-none transform rotate-12 z-10">
+              🥐
+            </div>
+          </div>
+
+          {/* 2. MID-DIVIDER HEADLINE BOX */}
+          <div className="border border-black/80 p-0.5 my-1.5">
+            <div className="border border-black/80 py-0.5 px-2 bg-stone-100/80 flex items-center justify-center gap-1.5 font-display text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider">
+              <span className="text-[#1E3A8A]">KAMU BLUBERRY</span>
+              <span className="text-black">&</span>
+              <span className="text-[#D97706]">AKU PASTRY</span>
+            </div>
+          </div>
+
+          {/* 3. TWO-COLUMN EDITORIAL SECTION */}
+          <div className="grid grid-cols-2 gap-2 sm:gap-2.5 items-stretch">
+            {/* Left Column: Secondary Photo Slot (Slot 2) */}
+            <div className="flex flex-col justify-center">
+              <div className="relative overflow-hidden border-2 border-black/90 bg-white p-1 rounded-none shadow-sm aspect-square w-full">
+                {photos[1] ? (
+                  <img
+                    src={photos[1]}
+                    alt="Photo 2"
+                    className={`w-full h-full object-cover ${filterClass}`}
+                    crossOrigin="anonymous"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-stone-100 flex flex-col items-center justify-center text-xs opacity-50">
+                    <Camera className="w-5 h-5 mb-0.5 text-black/60" />
+                    <span className="font-serif text-[9px] font-bold text-stone-700">Foto Slot 02</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Column: Editorial Paragraph & Spotify Player Card */}
+            <div className="flex flex-col justify-between space-y-1.5 text-left">
+              {/* Newspaper Column Paragraph */}
+              <p className="text-[7px] sm:text-[7.5px] font-serif text-justify leading-[1.3] text-stone-900 tracking-tight">
+                Lagu Foto Kita Blur mengingatkan bahwa kenangan terbaik tidak selalu hadir dalam kualitas terbaik. Kadang, foto yang buram justru menjadi bukti bahwa kita benar-benar sedang hidup di dalam momen itu tertawa, bergerak, dan menikmati waktu bersama.
+              </p>
+
+              {/* Spotify "NOW PLAYING" Card */}
+              <div className="border border-black/80 bg-white/95 p-1 sm:p-1.5 rounded-none shadow-2xs space-y-1 font-sans">
+                <div className="bg-gradient-to-r from-[#1E3A8A] via-[#2563EB] to-[#3B82F6] text-white px-1.5 py-0.5 flex items-center justify-between text-[6.5px] sm:text-[7px] font-extrabold uppercase tracking-wider rounded-2xs">
+                  <span>NOW PLAYING:</span>
+                  <span className="text-[7.5px] leading-none">▶</span>
+                </div>
+                
+                <div className="text-[7.5px] sm:text-[8px] font-black text-black truncate tracking-tight">
+                  FOTO KITA BLUR - SAL PRIADI
+                </div>
+
+                <div className="flex items-center gap-1 text-black/90 pt-0.5">
+                  <svg className="w-3 h-3 text-[#1DB954] fill-current shrink-0" viewBox="0 0 24 24">
+                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                  </svg>
+                  {/* Spotify Soundwave Bars */}
+                  <div className="flex items-center gap-[1.5px] h-2.5 opacity-90">
+                    <div className="w-[1.5px] h-1.5 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-2.5 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-1 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-3 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-2 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-3.5 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-1.5 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-2.5 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-1 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-3 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-2 bg-black rounded-full" />
+                    <div className="w-[1.5px] h-1.5 bg-black rounded-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div
+          className={`w-full ${
+            templateId === 'grid'
+              ? 'grid grid-cols-2 gap-2.5'
+              : isHeartShape
+              ? 'space-y-3 sm:space-y-3.5'
+              : templateId === 'retro' || templateId === 'disposable'
+              ? 'px-2 sm:px-3 space-y-2.5'
+              : 'space-y-2.5 sm:space-y-3'
+          }`}
+        >
         {photos.map((photoUrl, idx) => (
           <div key={idx} className="space-y-1">
             
@@ -864,6 +1007,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
           </div>
         ))}
       </div>
+      )}
 
       {/* SPECIAL STATS SECTION (For Character Card Template) */}
       {templateId === 'character-card' && (
@@ -951,7 +1095,9 @@ const PhotoStrip = forwardRef(function PhotoStrip(
         {caption && (
           <p
             className={`font-bold leading-tight break-words px-1 ${
-              templateId === 'wedding-love' || isHeartShape
+              templateId === 'newspaper'
+                ? 'font-serif text-xs sm:text-sm text-stone-900 font-black italic tracking-wide'
+                : templateId === 'wedding-love' || isHeartShape
                 ? 'font-serif text-sm sm:text-base text-red-950 font-black tracking-wide'
                 : templateId === 'polaroid'
                 ? 'font-handwriting text-lg sm:text-2xl text-base-content'
@@ -994,7 +1140,11 @@ const PhotoStrip = forwardRef(function PhotoStrip(
                 : 'font-handwriting text-base sm:text-xl text-primary font-extrabold'
             }`}
           >
-            {templateId === 'wedding-love' || isHeartShape ? (
+            {templateId === 'newspaper' ? (
+              <span className="inline-flex items-center justify-center gap-1.5">
+                <span>🗞️</span> {caption} <span>🗞️</span>
+              </span>
+            ) : templateId === 'wedding-love' || isHeartShape ? (
               <span className="inline-flex items-center justify-center gap-1.5">
                 <span>💍</span> {caption} <span>💍</span>
               </span>
@@ -1063,6 +1213,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
 
         {showDate && dateText && (
           <div className="flex items-center justify-center gap-1 text-[10px] font-mono font-bold tracking-wider opacity-70">
+            {templateId === 'newspaper' && <span>🗞️</span>}
             {templateId === 'wedding-love' && <span>💍</span>}
             {templateId === 'cat' && <span>🐾</span>}
             {templateId === 'kawaii' && <span>🎀</span>}
@@ -1081,7 +1232,9 @@ const PhotoStrip = forwardRef(function PhotoStrip(
             <span>{dateText}</span>
             <span>•</span>
             <span>
-              {templateId === 'wedding-love'
+              {templateId === 'newspaper'
+                ? 'EDISI KHUSUS'
+                : templateId === 'wedding-love'
                 ? 'JUST MARRIED'
                 : templateId === 'cat'
                 ? 'MEOWBOOTH'
@@ -1115,6 +1268,7 @@ const PhotoStrip = forwardRef(function PhotoStrip(
                 ? 'THE JOURNEY'
                 : 'PHOTOMOMENT'}
             </span>
+            {templateId === 'newspaper' && <span>🗞️</span>}
             {templateId === 'wedding-love' && <span>💍</span>}
             {templateId === 'cat' && <span>🐾</span>}
             {templateId === 'kawaii' && <span>🎀</span>}

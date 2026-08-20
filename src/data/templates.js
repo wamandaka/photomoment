@@ -16,6 +16,20 @@ export const TEMPLATES = [
 
   // 1. CONCEPTUAL / CREATIVE TEMPLATES
   {
+    id: "newspaper",
+    name: "Daily Gazette 📰",
+    tagline: "Vintage newsprint 2-shot story & song player",
+    category: "Concepts",
+    description: "Broadsheet newspaper masthead, bold 'Foto Kita Blur' headline with cursive script, bakery & fruit stickers, 2-shot editorial layout, and Spotify Now Playing card.",
+    aspectRatio: "3:4",
+    defaultFrame: "newspaper-paper",
+    defaultFilter: "vintage",
+    bgPattern: "none",
+    badge: "📰 2 Shots",
+    iconName: "Newspaper",
+    fixedShots: 2,
+  },
+  {
     id: "evidence",
     name: "Evidence Board 🕵️",
     tagline: "Classified investigation case file",

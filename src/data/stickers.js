@@ -21,7 +21,19 @@ export const STICKERS = [
   { id: "cat-paw", label: "Paw", emoji: "🐾", text: "🐾", color: "#FF85A1" },
   { id: "cat-face", label: "Cat", emoji: "🐱", text: "🐱" },
 
+  // Newspaper & Cafe Vibes
+  { id: "blueberry", label: "Blueberry", emoji: "🫐", text: "🫐" },
+  { id: "croissant", label: "Croissant", emoji: "🥐", text: "🥐" },
+  { id: "newspaper", label: "Newspaper", emoji: "📰", text: "📰" },
+  { id: "coffee", label: "Coffee", emoji: "☕", text: "☕" },
+  { id: "vinyl", label: "Vinyl", emoji: "💿", text: "💿" },
+  { id: "music", label: "Music", emoji: "🎵", text: "🎵" },
+  { id: "sparkle-news", label: "Star", emoji: "⊛", text: "⊛", color: "#1E293B" },
+
   // Badges & Tags
+  { id: "tag-foto-blur", label: "BLUR", isBadge: true, text: "FOTO KITA BLUR 📰", bg: "#0E2A47", textCol: "#FFFFFF" },
+  { id: "tag-now-playing", label: "PLAYING", isBadge: true, text: "NOW PLAYING 🎵", bg: "#1DB954", textCol: "#000000" },
+  { id: "tag-pastry", label: "PASTRY", isBadge: true, text: "KAMU & AKU 🥐", bg: "#D97706", textCol: "#FFFFFF" },
   { id: "tag-just-married", label: "MARRIED", isBadge: true, text: "JUST MARRIED 💍", bg: "#D4AF37", textCol: "#1A1417" },
   { id: "tag-wedding-love", label: "FOREVER", isBadge: true, text: "TOGETHER FOREVER ♡", bg: "#800F2F", textCol: "#FFFFFF" },
   { id: "tag-kawaii", label: "KAWAII", isBadge: true, text: "KAWAII CLUB 🎀", bg: "#FF85A1", textCol: "#FFFFFF" },

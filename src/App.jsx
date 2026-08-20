@@ -173,11 +173,29 @@ export default function App() {
     setPersonality(generatePersonality());
   };
 
+  // Select & Configure Template (Handles fixed shots like 2 shots for Newspaper)
+  const handleSelectTemplate = useCallback((tmplId) => {
+    setSelectedTemplate(tmplId);
+    const tmpl = TEMPLATES.find((t) => t.id === tmplId);
+    if (tmpl?.fixedShots) {
+      setTotalShots(tmpl.fixedShots);
+      setCapturedPhotos((prev) => (prev.length > tmpl.fixedShots ? prev.slice(0, tmpl.fixedShots) : prev));
+    }
+    if (tmpl?.defaultFrame) {
+      setSelectedFrame(tmpl.defaultFrame);
+    }
+    if (tmpl?.defaultFilter) {
+      setSelectedFilter(tmpl.defaultFilter);
+    }
+  }, []);
+
   // Demo shortcut for quick testing or users without webcams
   const handleLoadDemoSession = async (count = 4) => {
-    const demos = getSamplePhotos(count);
+    const tmpl = TEMPLATES.find((t) => t.id === selectedTemplate);
+    const actualCount = tmpl?.fixedShots || count;
+    const demos = getSamplePhotos(actualCount);
     setCapturedPhotos(demos);
-    setTotalShots(count);
+    setTotalShots(actualCount);
     const detected = await analyzePhotosForPersonality(demos);
     setPersonality(detected);
     handleNavigate('result');
@@ -202,7 +220,7 @@ export default function App() {
           <Home
             onStartPhotobooth={() => handleNavigate('photobooth')}
             onSelectTemplate={(tmplId) => {
-              setSelectedTemplate(tmplId);
+              handleSelectTemplate(tmplId);
               handleNavigate('photobooth');
             }}
           />
@@ -222,7 +240,7 @@ export default function App() {
               setCapturedPhotos([]);
             }}
             selectedTemplate={selectedTemplate}
-            onSelectTemplate={setSelectedTemplate}
+            onSelectTemplate={handleSelectTemplate}
             selectedFilter={selectedFilter}
             selectedFrame={selectedFrame}
             caption={caption}
@@ -243,7 +261,7 @@ export default function App() {
               capturedPhotos.length > 0 ? capturedPhotos : getSamplePhotos(totalShots)
             }
             selectedTemplate={selectedTemplate}
-            onSelectTemplate={setSelectedTemplate}
+            onSelectTemplate={handleSelectTemplate}
             selectedFilter={selectedFilter}
             onSelectFilter={setSelectedFilter}
             selectedFrame={selectedFrame}

@@ -142,6 +142,17 @@ export default function Photobooth({
   const allPhotosReady = capturedPhotos.length >= totalShots;
   const currentFilterObj = FILTERS.find((f) => f.id === selectedFilter) || FILTERS[0];
 
+  const activeTemplateData = TEMPLATES.find((t) => t.id === selectedTemplate);
+  const isFixedShots = Boolean(activeTemplateData?.fixedShots);
+  const fixedShotCount = activeTemplateData?.fixedShots;
+
+  // Enforce fixed shots if template requires it (e.g. Newspaper 2 shots)
+  useEffect(() => {
+    if (isFixedShots && totalShots !== fixedShotCount) {
+      onChangeTotalShots(fixedShotCount);
+    }
+  }, [isFixedShots, fixedShotCount, totalShots, onChangeTotalShots]);
+
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 animate-fade-in">
       
@@ -162,26 +173,37 @@ export default function Photobooth({
         {/* Studio Switchers (Shots & Countdown Timer) */}
         {!isCapturing && capturedPhotos.length === 0 && (
           <div className="flex flex-wrap items-center gap-2">
-            {/* Shot Count Switcher (1 - 6) */}
-            <div className="flex items-center gap-1 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
-              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 text-base-content/60">
-                Shots:
-              </span>
-              {SHOT_OPTIONS.map((opt) => (
-                <button
-                  key={opt.count}
-                  onClick={() => onChangeTotalShots(opt.count)}
-                  className={`btn btn-xs sm:btn-sm rounded-xl font-bold transition-all ${
-                    totalShots === opt.count
-                      ? 'btn-primary shadow-neo-sm'
-                      : 'btn-ghost text-base-content hover:bg-base-300'
-                  }`}
-                  title={opt.desc}
-                >
-                  {opt.count}
-                </button>
-              ))}
-            </div>
+            {/* Shot Count Switcher (1 - 6) or Locked Fixed Shots */}
+            {isFixedShots ? (
+              <div className="flex items-center gap-1 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
+                <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 text-base-content/60">
+                  Shots:
+                </span>
+                <span className="badge badge-primary font-extrabold text-xs py-2.5 px-3 rounded-xl shadow-neo-sm">
+                  🔒 {fixedShotCount} Shots ({activeTemplateData?.name?.split(' ')[0] || 'Fixed'})
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">
+                <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider px-1.5 text-base-content/60">
+                  Shots:
+                </span>
+                {SHOT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.count}
+                    onClick={() => onChangeTotalShots(opt.count)}
+                    className={`btn btn-xs sm:btn-sm rounded-xl font-bold transition-all ${
+                      totalShots === opt.count
+                        ? 'btn-primary shadow-neo-sm'
+                        : 'btn-ghost text-base-content hover:bg-base-300'
+                    }`}
+                    title={opt.desc}
+                  >
+                    {opt.count}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Countdown Timer Switcher (0s, 3s, 5s, 10s) */}
             <div className="flex items-center gap-1 bg-base-200/70 p-1 sm:p-1.5 rounded-2xl border-2 border-base-content/15 shadow-neo-sm">

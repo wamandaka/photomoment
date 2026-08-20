@@ -20,6 +20,7 @@ import {
   Heart,
   Smile,
   Camera,
+  Newspaper,
 } from 'lucide-react';
 
 const ICON_MAP = {
@@ -42,6 +43,7 @@ const ICON_MAP = {
   Heart,
   Smile,
   Camera,
+  Newspaper,
 };
 
 const CATEGORIES = [
