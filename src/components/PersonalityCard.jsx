@@ -163,10 +163,11 @@ export default function PersonalityCard({ personality, onReroll }) {
       </div>
 
       {/* 7. Re-roll Action */}
-      {onReroll && (
+      {typeof onReroll === 'function' && (
         <div className="pt-1 flex justify-end">
           <button
-            onClick={onReroll}
+            type="button"
+            onClick={() => onReroll()}
             className="btn btn-xs btn-ghost rounded-xl font-bold text-[11px] gap-1 text-base-content/70 hover:text-primary"
             title="Generate a new personality"
           >

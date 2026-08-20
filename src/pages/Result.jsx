@@ -240,8 +240,13 @@ export default function Result({
       <MysteryModal
         isOpen={isMysteryOpen}
         onClose={() => setIsMysteryOpen(false)}
-        onApply={(mysteryResult) => {
-          if (onApplyMystery) onApplyMystery(mysteryResult);
+        onApplyMystery={(mysteryResult) => {
+          if (typeof onApplyMystery === 'function') {
+            onApplyMystery(mysteryResult);
+          }
+          if (typeof shuffleDecorations === 'function') {
+            shuffleDecorations(5);
+          }
           setIsMysteryOpen(false);
         }}
       />

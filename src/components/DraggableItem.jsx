@@ -186,19 +186,22 @@ export default function DraggableItem({
       {/* DECORATION CONTENT */}
       <div className="relative group">
         {/* Type 1: Preset Sticker / Emoji */}
-        {item.type === 'sticker' && (
-          <div className="text-3xl sm:text-4xl drop-shadow-md select-none pointer-events-none filter saturate-110">
+        {(item.type === 'sticker' || item.type === 'emoji') && (
+          <div
+            style={{ color: item.textColor || item.color || undefined }}
+            className="text-3xl sm:text-4xl drop-shadow-md select-none pointer-events-none filter saturate-110"
+          >
             {item.content}
           </div>
         )}
 
-        {/* Type 2: Custom Text Stamp */}
-        {item.type === 'text' && (
+        {/* Type 2: Custom Text Stamp / Badge */}
+        {(item.type === 'text' || item.type === 'badge') && (
           <div
             style={{
-              backgroundColor: item.bgColor || '#FFFFFF',
-              color: item.textColor || '#000000',
-              borderColor: item.hasBorder ? '#000000' : 'transparent',
+              backgroundColor: item.bgColor || item.bg || '#FFFFFF',
+              color: item.textColor || item.textCol || '#000000',
+              borderColor: item.hasBorder !== false ? '#000000' : 'transparent',
             }}
             className={`px-2.5 py-1 rounded-xl border-2 shadow-neo-sm font-bold text-xs sm:text-sm whitespace-nowrap select-none pointer-events-none ${
               item.fontFamily || 'font-display'

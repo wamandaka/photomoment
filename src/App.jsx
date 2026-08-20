@@ -139,8 +139,18 @@ export default function App() {
   };
 
   // 🎲 Apply Mystery Photobooth / Surprise Me result
-  const handleApplyMystery = () => {
-    // Pick from creative and popular templates
+  const handleApplyMystery = (customMystery = null) => {
+    if (customMystery) {
+      if (customMystery.templateId) setSelectedTemplate(customMystery.templateId);
+      if (customMystery.frameId) setSelectedFrame(customMystery.frameId);
+      if (customMystery.filterId) setSelectedFilter(customMystery.filterId);
+      if (customMystery.caption) setCaption(customMystery.caption);
+      if (customMystery.decorations) setRandomDecorations(customMystery.decorations);
+      if (customMystery.personality) setPersonality(customMystery.personality);
+      return;
+    }
+
+    // Fallback pick from creative and popular templates
     const creativePool = TEMPLATES.filter((t) => t.category === 'Concepts' || t.category === 'Cute');
     const randomTmpl = creativePool[Math.floor(Math.random() * creativePool.length)] || TEMPLATES[0];
 

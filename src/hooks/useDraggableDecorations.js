@@ -112,21 +112,27 @@ export function useDraggableDecorations(initialDecorations = []) {
   // Shuffle / Scatter random fun doodles and stamps
   const shuffleDecorations = useCallback((count = 5) => {
     const randomSet = generateRandomDecorations(count);
-    const mapped = randomSet.map((item, idx) => ({
-      id: `random-${Date.now()}-${idx}`,
-      type: item.type || 'sticker',
-      content: item.text || item.emoji || '✨',
-      label: item.text || item.emoji || 'Doodle',
-      fontFamily: 'font-mono font-bold',
-      textColor: item.textColor || '#000000',
-      bgColor: item.bgColor || 'transparent',
-      hasBorder: !!item.bgColor,
-      x: parseFloat(item.x) || (30 + (idx % 3) * 20),
-      y: parseFloat(item.y) || (20 + idx * 14),
-      scale: item.scale || 1.0,
-      rotation: item.rotation || Math.round((Math.random() - 0.5) * 30),
-      zIndex: Date.now() + idx,
-    }));
+    const mapped = randomSet.map((item, idx) => {
+      const isBadge = item.type === 'badge';
+      const slotX = idx % 2 === 0 ? 18 + (idx * 11) % 25 : 62 + (idx * 9) % 22;
+      const slotY = 12 + idx * 17;
+
+      return {
+        id: `random-${Date.now()}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
+        type: isBadge ? 'text' : 'sticker',
+        content: item.text || item.emoji || '✨',
+        label: item.text || item.emoji || 'Doodle',
+        fontFamily: isBadge ? 'font-display' : 'font-mono font-bold',
+        textColor: item.textCol || item.textColor || (isBadge ? '#FFFFFF' : (item.color || '#000000')),
+        bgColor: item.bg || item.bgColor || (isBadge ? '#E11D48' : 'transparent'),
+        hasBorder: isBadge,
+        x: Math.min(88, Math.max(12, slotX)),
+        y: Math.min(92, Math.max(8, slotY)),
+        scale: Number((item.scale || 1.0).toFixed(2)),
+        rotation: item.rotate ?? (item.rotation ?? Math.round((Math.random() - 0.5) * 24)),
+        zIndex: Date.now() + idx,
+      };
+    });
 
     setDecorations(mapped);
     setSelectedId(null);

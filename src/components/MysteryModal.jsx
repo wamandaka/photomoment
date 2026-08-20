@@ -1,20 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Dices, Flame, Heart, Shuffle, ArrowRight } from 'lucide-react';
 import { fireConfetti } from '../utils/downloadImage';
+import { generatePersonality } from '../utils/personalityGenerator';
+import { getRandomFunnyCaption } from '../utils/funnyCaptions';
+import { TEMPLATES } from '../data/templates';
 
 export default function MysteryModal({
   isOpen,
   onClose,
   onApplyMystery,
-  personality,
+  onApply,
 }) {
   const [step, setStep] = useState(0); // 0: countdown, 1: scanning, 2: matching, 3: revealed
+  const [mysteryData, setMysteryData] = useState(null);
 
   useEffect(() => {
     if (!isOpen) {
       setStep(0);
+      setMysteryData(null);
       return;
     }
+
+    // Roll a new fresh surprise combination when the mystery modal opens
+    const creativePool = TEMPLATES.filter((t) => t.category === 'Concepts' || t.category === 'Cute');
+    const randomTmpl = creativePool[Math.floor(Math.random() * creativePool.length)] || TEMPLATES[0];
+    const newPersonality = generatePersonality();
+    const funnyCaption = getRandomFunnyCaption(randomTmpl.id);
+
+    setMysteryData({
+      templateId: randomTmpl.id,
+      templateName: randomTmpl.name,
+      frameId: randomTmpl.defaultFrame || 'white',
+      filterId: randomTmpl.defaultFilter || 'original',
+      caption: funnyCaption,
+      personality: newPersonality,
+    });
 
     // Progression timer
     const t1 = setTimeout(() => setStep(1), 700);
@@ -32,6 +52,19 @@ export default function MysteryModal({
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  const handleApply = () => {
+    if (typeof onApplyMystery === 'function') {
+      onApplyMystery(mysteryData);
+    } else if (typeof onApply === 'function') {
+      onApply(mysteryData);
+    }
+    if (typeof onClose === 'function') {
+      onClose();
+    }
+  };
+
+  const previewPersonality = mysteryData?.personality;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 animate-fade-in">
@@ -88,19 +121,28 @@ export default function MysteryModal({
             </div>
           )}
 
-          {step === 3 && personality && (
+          {step === 3 && previewPersonality && (
             <div className="space-y-3 animate-fade-in">
-              <div className="inline-block px-3 py-0.5 rounded-full text-[11px] font-black tracking-widest uppercase border border-black"
-                style={{ backgroundColor: personality.rarityColor, color: '#FFFFFF' }}
+              <div
+                className="inline-block px-3 py-0.5 rounded-full text-[11px] font-black tracking-widest uppercase border border-black shadow-neo-sm"
+                style={{
+                  backgroundColor: previewPersonality.rarityColor || '#E11D48',
+                  color: previewPersonality.rarityTextCol || '#FFFFFF',
+                }}
               >
-                {personality.badge}
+                {previewPersonality.badge}
               </div>
               <h4 className="text-2xl font-black font-display text-base-content">
-                {personality.title}
+                {previewPersonality.title}
               </h4>
               <p className="text-xs text-base-content/80 font-medium italic max-w-xs mx-auto">
-                "{personality.quote}"
+                "{previewPersonality.quote}"
               </p>
+              {mysteryData?.templateName && (
+                <div className="text-[10px] font-mono font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-lg border border-primary/20 inline-block">
+                  Template: {mysteryData.templateName}
+                </div>
+              )}
             </div>
           )}
 
@@ -110,10 +152,8 @@ export default function MysteryModal({
         {step === 3 ? (
           <div className="space-y-2">
             <button
-              onClick={() => {
-                onApplyMystery();
-                onClose();
-              }}
+              type="button"
+              onClick={handleApply}
               className="btn btn-md sm:btn-lg btn-neo-primary w-full rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-neo-lg"
             >
               <span>Reveal My Memory!</span>
